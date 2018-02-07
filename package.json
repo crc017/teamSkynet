@@ -17,6 +17,10 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "express": "^4.15.4"
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.1.1",
+    "method-override": "^2.3.10",
+    "sequelize": "^4.32.7"
   }
 }

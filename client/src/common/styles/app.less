@@ -1,0 +1,144 @@
+// wiredep-removed:bower:less
+// wiredep-removed:endbower
+
+@import "less/bootstrap.less";
+
+// Base
+@import "base.less";
+
+// Pages
+@import "pages/login.less";
+@import "pages/dashboard.less";
+
+// Widgets and Effects
+@import "widgets/input-underline.less";
+// @import "../../bower_components/bootstrap-btn-outline-rounded/index.less";
+@import "index.less";
+@import "transitions/all.less";
+
+@import "~font-awesome/less/font-awesome.less";
+@import "~nprogress/nprogress.css";
+
+// Other
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+html,body {
+	overflow: hidden;
+}
+
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.customImg {
+  border-radius: 100px;
+  opacity: .75;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+}
+
+.login-page {
+  background: darkslategray;
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 950, from(#000), to(slategray));
+}
+
+.profilePannel {
+  width: 280px;
+  height: 15em;
+  margin-right: 10px;
+}
+
+.profilePannel:lastchild {
+  margin-right: 0px;
+}
+
+.profileJumbo {
+  text-align: center;
+  align-content: center;
+  }
+
+#eCalendar {
+  background-image: url('../images/calendar.png');
+  background-size: cover;
+  color: black;
+}
+
+#calendarText {
+  margin-top: 70%;
+  font-size: 20px;
+  color: white;
+  border-style: groove;
+  border-width: 2px;
+}
+
+#meals {
+  background-image: url('../images/meals.png');
+  background-size: cover;
+  color: black;
+}
+
+#mealText {
+  margin-top: 70%;
+  font-size: 20px;
+  color: white;
+  border-style: groove;
+  border-width: 2px;
+}
+
+#shop {
+  background-image: url('../images/shop.png');
+  background-size: cover;
+  color: black;
+}
+
+#shopText {
+  margin-top: 70%;
+  font-size: 20px;
+  color: white;
+  border-style: groove;
+  border-width: 2px;
+}
+
+#goals {
+  
+}
+
+.infoText {
+  margin-top: 70%;
+  font-size: 20px;
+  color: black;
+  border-style: groove;
+  border-width: 2px;
+}
+
+#sidebar {
+  background: linear-gradient(black, slategray)
+}
+
+#profileJumbo {
+  background: radial-gradient(slategray 30%, black 100%, slategray 10%);
+  opacity: .90;
+}
+
+#overview {
+  background-image: url('../images/exercise.png');
+  background-size: cover;
+}
