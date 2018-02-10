@@ -17,10 +17,16 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "autoprefixer": "^7.2.5",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.4",
+    "extract-text-webpack-plugin": "^3.0.2",
     "jsonwebtoken": "^8.1.1",
     "method-override": "^2.3.10",
-    "sequelize": "^4.32.7"
+    "mongoose": "^5.0.4",
+    "postcss-nested": "^3.0.0",
+    "sequelize": "^4.32.7",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }
