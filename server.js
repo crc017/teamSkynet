@@ -4,22 +4,62 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cookieparser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const PORT = process.env.PORT || 3000;
 
+<<<<<<< HEAD
 var myDB ='mongodb://localhost/project3';
 
 
 const db = require("./models/users");
+=======
+//const db = require("./models");
+>>>>>>> 5a09a58cd120c687ca77dbabb4f18c76579313fc
 const router = express.Router();
 const app = express();
 
-var PORT = process.env.PORT || 3000;
+
+const usersController = require("./controllers/usersController");
+const mongoose = require("mongoose");
+
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+app.use(express.static("client/build"));
 
-// Send every request to the React app
+//Mongo db action example
+router.route("/")
+  .get(usersController.findAll)
+  .post(usersController.create);
+  console.log("we have data")
+// Matches with "/api/books/:id"
+router
+  .route("/:id")
+  .get(usersController.findById)
+  .put(usersController.update)
+  .delete(usersController.remove);
+
+//All apis before this:
+router.use(function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+//********************//Mongoose Connection//**************************//
+// Set up promises with mongoose
+mongoose.Promise = global.Promise;
+// Connect to the Mongo DB
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist",
+  {
+    useMongoClient: true
+  }
+);
+
+
+
+
 
 //Authenticate API - login.onclick execute
 // router.post("/api/auth", function (req, res) {
@@ -159,12 +199,7 @@ if (process.env.NODE_ENV === "production") {
 
 //   })
 // });
-
-
-// Define any API routes before this runs
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// Serve application file depending on environment
 
 app.listen(PORT, function() {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
