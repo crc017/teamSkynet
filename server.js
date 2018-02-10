@@ -5,8 +5,10 @@ const path = require("path");
 const cookieparser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 
+var myDB ='mongodb://localhost/project3';
 
-const db = require("./models");
+
+const db = require("./models/users");
 const router = express.Router();
 const app = express();
 

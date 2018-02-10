@@ -18,9 +18,10 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "jsonwebtoken": "^8.1.1",
     "method-override": "^2.3.10",
-    "sequelize": "^4.32.7"
+    "sequelize": "^4.32.7",
+    "users": "^2.0.0"
   }
 }
