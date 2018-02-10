@@ -1,13 +1,12 @@
 'use strict';
 
-///////////////////////////////////////
-////////     routing master    ///////
-/////////////////////////////////////
+// ///////////////////////////////////////
+// ////////     routing master    ///////
+// /////////////////////////////////////
 
 
-exports.auth =      require('./auth')
-exports.dbs =       require('./dbs')
-exports.dba =       require('./dba')
-exports.error =     require('./error')
-exports.help =      require('./help')
-exports.unk =       require('./unk')
+// exports.auth =      require('./auth')
+ exports.dbu =       require('./dbu')
+// exports.dbc =       require('./dbc')
+// exports.dbb =      require('./dbb')
+// exports.error =     require('./error')

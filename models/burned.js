@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const burnedSchema = new Schema({
-   date: {type: Date.Now(), required: true },
+   date: {type: Date, required: true },
    caloriesBurned: {type: Number, required:true },
    timeExcercised: {type: Number, required:true }
    });

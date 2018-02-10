@@ -4,17 +4,17 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cookieparser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const logger =      require("morgan");
+const routes = require("./routes");
+var logger = require('morgan');
 const PORT = process.env.PORT || 3000;
 
-<<<<<<< HEAD
-var myDB ='mongodb://localhost/project3';
 
 
-const db = require("./models/users");
-=======
-//const db = require("./models");
->>>>>>> 5a09a58cd120c687ca77dbabb4f18c76579313fc
+
+const db = require("./models");
+// const db = process.env.MONGODB_URI || setup.testdb.uri;
+// require('./models')(db);
+
 const router = express.Router();
 const app = express();
 
@@ -26,41 +26,52 @@ const mongoose = require("mongoose");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(logger("dev"));
 // Serve up static assets (usually on heroku)
-app.use(express.static("client/build"));
 
 //Mongo db action example
-router.route("/")
-  .get(usersController.findAll)
-  .post(usersController.create);
-  console.log("we have data");
-// Matches with "/api/books/:id"
-router
-  .route("/:id")
-  .get(usersController.findById)
-  .put(usersController.update)
-  .delete(usersController.remove);
 
-//All apis before this:
-router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+const dbu = express.Router();
+
+require('./routes/dbu')(dbu);
+
+
+
+//Important*********
+//Do not delete
+// --------------------------------------- 
+// router.route("/")
+//   .get(usersController.findAll)
+//   .post(usersController.create);
+//   console.log("we have data");
+// // Matches with "/api/books/:id"
+// router
+//   .route("/:id")
+//   .get(usersController.findById)
+//   .put(usersController.update)
+//   .delete(usersController.remove);
+
+// //All apis before this:
+// router.use(function(req, res) {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
+// -----------------------------------------------------
+
 
 //********************//Mongoose Connection//**************************//
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist",
+  process.env.MONGODB_URI || "mongodb://localhost/fitHub",
   {
     useMongoClient: true
   }
 );
 
+app.use(express.static("client/build"));
 
-
-
+app.get('/', dbu)
 
 //Authenticate API - login.onclick execute
 // router.post("/api/auth", function (req, res) {
@@ -200,6 +211,10 @@ mongoose.connect(
 
 //   })
 // });
+
+
+
+
 // Serve application file depending on environment
 
 app.listen(PORT, function() {

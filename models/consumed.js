@@ -2,7 +2,7 @@
  const Schema = mongoose.Schema;
 
 const consumedSchema = new Schema({
-    date: {type: Date.Now(), required: true },
+    date: {type: Date, required: true },
     calories: {type: Number, required:true }
 });
 
