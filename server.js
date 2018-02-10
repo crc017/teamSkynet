@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cookieparser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const logger =      require("morgan");
 const PORT = process.env.PORT || 3000;
 
 //const db = require("./models");
@@ -26,7 +27,7 @@ app.use(express.static("client/build"));
 router.route("/")
   .get(usersController.findAll)
   .post(usersController.create);
-  console.log("we have data")
+  console.log("we have data");
 // Matches with "/api/books/:id"
 router
   .route("/:id")
