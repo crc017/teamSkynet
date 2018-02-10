@@ -7,7 +7,14 @@ const jwt = require("jsonwebtoken");
 const logger =      require("morgan");
 const PORT = process.env.PORT || 3000;
 
+<<<<<<< HEAD
+var myDB ='mongodb://localhost/project3';
+
+
+const db = require("./models/users");
+=======
 //const db = require("./models");
+>>>>>>> 5a09a58cd120c687ca77dbabb4f18c76579313fc
 const router = express.Router();
 const app = express();
 
