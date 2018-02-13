@@ -1,6 +1,7 @@
 const express = require("express");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const path = require("path");
 const cookieparser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
@@ -19,10 +20,6 @@ const router = express.Router();
 const app = express();
 
 
-const usersController = require("./controllers/usersController");
-const mongoose = require("mongoose");
-
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -31,9 +28,9 @@ app.use(logger("dev"));
 
 //Mongo db action example
 
-const dbu = express.Router();
+// const dbu = express.Router();
 
-require('./routes/dbu')(dbu);
+// require('./routes/dbu')(dbu);
 
 
 
@@ -57,6 +54,7 @@ require('./routes/dbu')(dbu);
 // });
 // -----------------------------------------------------
 
+app.use(express.static("client/build"));
 
 //********************//Mongoose Connection//**************************//
 // Set up promises with mongoose
@@ -68,10 +66,55 @@ mongoose.connect(
     useMongoClient: true
   }
 );
+//first api to save user to db
+app.get("/scrape", function(req, res) {
+  // First, we grab the body of the html with request
+  //******************axios call **** save space for ajax or axios if scraping */
+    // axios.get("https://www.investopedia.com/news/").then(function(response) {
+    //   // Then, we load that into cheerio and save it to $ for a shorthand selector
+    //   var $ = cheerio.load(response.data);
 
-app.use(express.static("client/build"));
+    // Now, we grab every h2 within an article tag, and do the following:
 
-app.get('/', dbu)
+      // Use result as example to save test user data
+      var result = {
+        firstName: "Leila",
+        lastName: "Organa",
+        gender: "female",
+        birthDate: 1/1/2001,
+        email: "leila@gmail.com",
+        userName: "leila",
+        password: "leila",
+        height: 55,
+        weight: 135,
+        myGoal: 125
+      };
+
+      // Add the text and href of every link, and save them as properties of the result object
+         //***************wrap below in each function to loop through multiple data entries from ajax/axois call   
+            // result.title = $(this)
+            //   .children("a")
+            //   .text();
+            // result.link = $(this)
+            //   .children("a")
+            //   .attr("href");
+         //******************* end of each() wrap */
+      // Create a new Article using the `result` object built from scraping
+      db.User
+        .create(result)
+        .then(function(dbUser) {
+          // If we were able to successfully scrape and save an Article, send a message to the client
+          res.send("DB Get Complete ---- User data Logged");
+        })
+        .catch(function(err) {
+          // If an error occurred, send it to the client
+          res.json(err);
+        });
+
+  });
+
+
+
 
 //Authenticate API - login.onclick execute
 // router.post("/api/auth", function (req, res) {
