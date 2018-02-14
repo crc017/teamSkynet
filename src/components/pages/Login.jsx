@@ -36,6 +36,7 @@ var LoginPage = React.createClass({
                     <input type="password" className="form-control input-underline input-lg" placeholder="Password" /> 
                   </div> 
                 </div> 
+              <button onClick={this.handlenewUser} type="submit" id="newUser" className="btn btn-white btn-outline btn-lg btn-rounded">New User?</button><br></br>
                 <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Login</button> 
               </form> 
             </div> 
@@ -74,8 +75,21 @@ var LoginPage = React.createClass({
 
     return false;
 
+  },
+
+  handlenewUser: function(e){
+
+    e.preventDefault();
+    this.props.history.pushState(null, '/newUser');
+    
+    // this.transitionTo('newUser');
+
+    return false;
+
   }
 
 });
+
+
 
 export default LoginPage;
