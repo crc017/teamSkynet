@@ -2,11 +2,12 @@
  const Schema = mongoose.Schema;
 
 const consumedSchema = new Schema({
+    userid: {type: Number, required: true},
     date: {type: Date, required: true },
     calories: {type: Number, required:true }
 });
 
-const users = mongoose.model("Consumed", consumedSchema);     
-module.exports = mongoose.model('Consumed',consumedSchema) ;
+const Consumed = mongoose.model("Consumed", consumedSchema);     
+module.exports = Consumed;
 
 
