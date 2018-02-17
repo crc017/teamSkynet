@@ -44,7 +44,7 @@ module.exports = {
 
   // Transform source code using Babel and React Hot Loader
   module: {
-    loaders: [
+    rules: [
       { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot", "babel-loader?stage=0"] },
       { test: /\.css$/, loader: "style!css" },
       { test: /\.less$/, loader: 'style!css!less' },

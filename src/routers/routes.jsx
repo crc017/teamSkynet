@@ -8,6 +8,7 @@ import DashboardOverviewPage from "../components/pages/dashboard/Overview";
 import DashboardReportsPage from "../components/pages/dashboard/Reports";
 import NewUserPage from "../components/pages/newUser";
 import LoginPage from "../components/pages/Login";
+import CalendarHome from "../components/pages/dashboard/Calendar";
 
 
 var Routes = React.createClass({
