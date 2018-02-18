@@ -27,8 +27,14 @@ export default class Home extends Component {
         {
           id: 0,
           title: 'Pushups: 20',
-          start: new Date(2018, 1, 14, 18.5),
-          end: new Date(2018, 1, 14, 19),
+          start: new Date(2018, 1, 15, 18.5),
+          end: new Date(2018, 1, 15, 19),
+        },
+        {
+          id: 1,
+          title: 'Situps: 50',
+          start: new Date(2018, 1, 15, 19),
+          end: new Date(2018, 1, 15, 20),
         }
       ]
     }
