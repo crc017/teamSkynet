@@ -7,12 +7,12 @@ var Blank = React.createClass({
     return (
       <div className="overview-page" key="overview"> 
         <Link to="/dashboard/reports" className="pull-right btn btn-primary btn-outline btn-rounded">Reports</Link> 
-        <h2>Profile</h2> 
+        <h2>Home</h2> 
         <Jumbotron className='profileJumbo' id="profileJumbo">
           <div className="row">
-            <Panel className="profilePannel col-sm-4" id="personalInfo">
+            <Panel  className="profilePannel col-sm-4" id="personalInfo" >
               <p className="infoText">
-                Personal Info
+              <Link style={{color: 'white'}} activeStyle={{color: 'white'}} to="/dashboard/personalinfo">Profile</Link>
               </p>
             </Panel>
             <Panel className="profilePannel col-sm-4" id="goals">

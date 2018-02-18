@@ -4,6 +4,7 @@ import { createHashHistory, useBasename } from 'history';
 import { Router } from 'react-router';
 import "./common/styles/app.less";
 import NProgress from 'nProgress';
+import Home from './components/pages/dashboard/Calendar/Home';
 
 NProgress.configure({ showSpinner: false });
 
@@ -22,12 +23,20 @@ const rootRoute = {
       childRoutes: [
         require('./components/pages/dashboard/Overview'),
         require('./components/pages/dashboard/Reports'),
-        require('./components/pages/dashboard/Calendar')
+        require('./components/pages/dashboard/Calendar'),
+        require('./components/pages/dashboard/PersonalInfo'),
+        
       ]
     },
     {
       path: '/login',
       component: require('./components/pages/Login'),
+      childRoutes: [
+      ]
+    },
+    {
+      path: '/newUser',
+      component: require('./components/pages/newUser'),
       childRoutes: [
       ]
     }

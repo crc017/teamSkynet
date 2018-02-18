@@ -9,6 +9,16 @@ const mongoose = require("mongoose");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '.jpg')
+    }
+  });
 
 //UserTest
 //********************User Test API**************************
@@ -49,17 +59,54 @@ const jwt = require("jsonwebtoken");
 
 
 
+//******************************* */
+router.post("/testMulter", function(req,res){
+  var upload = multer({ storage: storage }).single('image');
+
+  upload(req, res, function (err) {
+    if (err) {0
+      // An error occurred when uploading 
+    }
+    res.json({
+        success: true,
+        message: Date.now()
+    });
+ 
+    // Everything went fine 
+  })
+})
+
+//******************************* */
+
+
 
 //newUser
 //********************New User API**************************
-router.post("/api/users", function (req, res) {
-
+router.post("/api/users", function (req,res) {
+  console.log("Consoled " + req.body.username);
+  
   db.User.findOne({
-    where: {
-      username: req.body.username
-    }
+    userName: req.body.username
+    // where: {
+    //   userName: req.body.username
+    // }
   }).then((user) => {
     if(!user) {
+      var upload = multer({ storage: storage }).single(req.body.username);
+
+      upload(req, res, function (err) {
+        if (err) {0
+          // An error occurred when uploading 
+        }
+        res.json({
+            success: true,
+            message: Date.now()
+        });
+     
+        if (err) {0
+          // An error occurred when uploading 
+        }
+      }),
       db.User.create({
         firstName: req.body.firstname,
         lastName: req.body.lastname,
@@ -67,12 +114,27 @@ router.post("/api/users", function (req, res) {
         birthDate: req.body.birthdate,
         email: req.body.email,
         userName: req.body.username,
-        password: req.body.newpassword,
+        password: req.body.password,
         height: req.body.height,
         weight: req.body.weight,
-        myGoal: req.body.mygoal,
-        image: req.body.image
-      }).then(() => {
+        myGoal: req.body.mygoal
+      })
+      .then((user) => {
+
+        const payload = {
+          id: user.id,
+          username: user.userName
+        };
+    
+        var token = jwt.sign(payload, "mySuperSecretSecureKey");
+    
+        // return the information including token as cookie
+        res.cookie("auth", token, {
+          expires: new Date(Date.now() + (86400 * 14 * 1000)), //2 weeks
+          maxAge: 86400 * 14 * 1000,
+          httpOnly: true,
+          secure: false // Doesn't need HTTPS
+        });
         res.status(200).json({
           message: 'Successfully created user.',
           success: true
@@ -95,15 +157,13 @@ router.post("/api/users", function (req, res) {
 //userLogin
 //********************Login API**************************
 router.post("/api/auth", function (req, res) {
-  var userName = req.body.userName;
+  var userName = req.body.username;
   var userPassword = req.body.password;
 
-
+  console.log("Consoled " + userName);
   db.User.findOne({
-    where: {
-      username: userName,
+      userName: userName,
       password: userPassword
-    }
   }).then((user) => {
 
     if (!user) {
@@ -137,6 +197,32 @@ router.post("/api/auth", function (req, res) {
 });
 
 //****************************************************************/
+
+
+//******************************************* */
+//// GET user info personalized display
+router.get("/api/userinfo", authMiddleware, function (req, res) { //authMiddleware
+  console.log(req.decoded);
+  db.User.findOne({
+    // include: [{
+    //   model: db.UserGroup,
+    //   required: true,
+    //   where: {
+    //     userId: req.decoded.id //req.decoded.user.id
+    //   }
+    // }]
+      
+      userName: req.decoded.username
+
+  }).then((user) => {
+    
+    res.status(200).json(user);
+
+  });
+
+});
+
+
 
 
 //getBurned

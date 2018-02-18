@@ -1,6 +1,14 @@
 var express = require('express');
 var app = express();
+const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const path = require("path");
+const cookieparser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const db = require("../models");
 
+var logger = require('morgan');
 
 /************************************************************
  *
@@ -14,6 +22,12 @@ var app = express();
  *     - POST /home
  *
  ************************************************************/
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+const router = require("../routes/router");
+app.use(cookieparser());
+app.use("/", router);
 
 // Serve application file depending on environment
 app.get('/app.js', function(req, res) {
@@ -86,9 +100,27 @@ if (!process.env.PRODUCTION) {
  *****************/
 
 var port = process.env.PORT || 8080;
+
+
+
+
+
+
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/fitHub",
+  {
+    //below line is unnecessary in mongoose version 5
+    //useMongoClient: true
+  }
+);
+
+
 var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
   console.log('Essential React listening at http://%s:%s', host, port);
 });
+
+

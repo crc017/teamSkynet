@@ -30,12 +30,14 @@ var LoginPage = React.createClass({
               <form role="form" onSubmit={this.handleLogin} className="ng-pristine ng-valid"> 
                 <div className="form-content"> 
                   <div className="form-group"> 
-                    <input type="text" className="form-control input-underline input-lg" placeholder="Email" /> 
+                    <input type="text" id="username" className="form-control input-underline input-lg" placeholder="Username" /> 
                   </div> 
                   <div className="form-group"> 
-                    <input type="password" className="form-control input-underline input-lg" placeholder="Password" /> 
+                    <input type="password" id="password" className="form-control input-underline input-lg" placeholder="Password" /> 
                   </div> 
                 </div> 
+                <p id = "errorMessage"></p>
+              <button onClick={this.handlenewUser} type="submit" id="newUser" className="btn btn-white btn-outline btn-lg btn-rounded">New User?</button><br></br>
                 <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Login</button> 
               </form> 
             </div> 
@@ -66,16 +68,49 @@ var LoginPage = React.createClass({
   },
 
   handleLogin: function(e){
-
     e.preventDefault();
-    this.props.history.pushState(null, '/dashboard/overview');
+    $.ajax({
+      url: "/api/auth",
+      method: "POST",
+      data: {
+        username: $("#username").val().trim(),
+        password: $("#password").val().trim()
+      }
+  }).done(function (data) {
+
+      if (data.success) {
+          window.location.href = '#/dashboard/overview';
+          this.props.history.pushState(null, '/dashboard/overview');
+          
+      } else {
+          $("#errorMessage").html(data.message);
+          //window.location.href = '/login';
+      }
+
+
+  });
+
+    //this.props.history.pushState(null, '/dashboard/overview');
     
     // this.transitionTo('dashboard');
+
+    return false;
+
+  },
+
+  handlenewUser: function(e){
+
+    e.preventDefault();
+    this.props.history.pushState(null, '/newUser');
+    
+    // this.transitionTo('newUser');
 
     return false;
 
   }
 
 });
+
+
 
 export default LoginPage;

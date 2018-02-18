@@ -6,7 +6,9 @@ import DashboardLayout from "../components/layouts/Dashboard";
 
 import DashboardOverviewPage from "../components/pages/dashboard/Overview";
 import DashboardReportsPage from "../components/pages/dashboard/Reports";
+import NewUserPage from "../components/pages/newUser";
 import LoginPage from "../components/pages/Login";
+
 
 var Routes = React.createClass({
 
@@ -18,9 +20,12 @@ var Routes = React.createClass({
               <Route name="dashboard.overview" path="/overview" handler={DashboardOverviewPage} />
               <Route name="dashboard.calendar" path="/calendar" handler={DashboardCalendarPage} />
               <Route name="dashboard.reports" path="/reports" handler={DashboardReportsPage} />
+              <Route name="dashboard.personalinfo" path="/personalinfo" handler={DashboardPersonalInfoPage} />
               <DefaultRoute name="dashboard.default" handler={DashboardOverviewPage} />
             </Route>
-            <Route name="login" path="/login" handler={LoginPage} />
+            
+          <Route name="login" path="/login" handler={LoginPage} />
+          <Route name="newUser" path="/newUser" handler={NewUserPage} />
             <DefaultRoute name="default" handler={DashboardLayout} />
             <Redirect from="/" to="dashboard.overview" />
           </Route>
