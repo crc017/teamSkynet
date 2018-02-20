@@ -7,9 +7,9 @@ import NProgress from 'nProgress';
 
 NProgress.configure({ showSpinner: false });
 
-const history = useBasename(createHashHistory)({
-   queryKey: false
-})
+// const history = useBasename(createHashHistory)({
+//    queryKey: false
+// })
 
 const rootRoute = {
   path: '/',
@@ -42,6 +42,6 @@ const rootRoute = {
 }
 
 render(
-  <Router history={history} routes={rootRoute} />,
+  <Router routes={rootRoute} />,
   document.getElementById('app')
 )
