@@ -13,12 +13,14 @@ var multer = require('multer');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/')
+      cb(null, '../uploads')
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '.jpg')
     }
   });
+var upload = multer({ storage: storage }).any();
+
 
 //UserTest
 //********************User Test API**************************
@@ -43,7 +45,7 @@ var storage = multer.diskStorage({
         db.User
           .create(result)
           .then(function(dbUser) {
-            // If we were able to successfully scrape and save an Article, send a message to the client
+            
             res.send("DB Get Complete ---- User data Logged");
           })
           .catch(function(err) {
@@ -61,8 +63,6 @@ var storage = multer.diskStorage({
 
 //******************************* */
 router.post("/testMulter", function(req,res){
-  var upload = multer({ storage: storage }).single('image');
-
   upload(req, res, function (err) {
     if (err) {0
       // An error occurred when uploading 
@@ -74,7 +74,7 @@ router.post("/testMulter", function(req,res){
  
     // Everything went fine 
   })
-})
+});
 
 //******************************* */
 
@@ -92,21 +92,6 @@ router.post("/api/users", function (req,res) {
     // }
   }).then((user) => {
     if(!user) {
-      var upload = multer({ storage: storage }).single(req.body.username);
-
-      upload(req, res, function (err) {
-        if (err) {0
-          // An error occurred when uploading 
-        }
-        res.json({
-            success: true,
-            message: Date.now()
-        });
-     
-        if (err) {0
-          // An error occurred when uploading 
-        }
-      }),
       db.User.create({
         firstName: req.body.firstname,
         lastName: req.body.lastname,
@@ -139,6 +124,17 @@ router.post("/api/users", function (req,res) {
           message: 'Successfully created user.',
           success: true
         });;
+      });
+      upload(req.body.image, res, function (err) {
+        if (err) {0
+          // An error occurred when uploading 
+        }
+        res.json({
+            success: true,
+            message: Date.now()
+        });
+     
+        // Everything went fine 
       });
       
     }else{
@@ -330,7 +326,9 @@ router.post("/api/consumed", authMiddleware, function (req, res) {
 });
 //****************************************************************/
 
+function imageStore(req, res, file, next) {
 
+}
 
 
 //authMiddleware

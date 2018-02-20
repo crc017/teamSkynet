@@ -21,23 +21,23 @@ app.use(cookieparser());
 app.use("/", router);
 
 
-// Serve application file depending on environment
-app.get('/app.js', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/client/build/app.js');
-  } else {
-    res.redirect('//localhost:9090/build/app.js');
-  }
-});
+// // Serve application file depending on environment
+// app.get('/app.js', function(req, res) {
+//   if (process.env.PRODUCTION) {
+//     res.sendFile(__dirname + '/client/build/app.js');
+//   } else {
+//     res.redirect('//localhost:9090/build/app.js');
+//   }
+// });
 
-// Serve aggregate stylesheet depending on environment
-app.get('/style.css', function(req, res) {
-  if (process.env.PRODUCTION) {
-    res.sendFile(__dirname + '/client/build/style.css');
-  } else {
-    res.redirect('//localhost:9090/build/style.css');
-  }
-});
+// // Serve aggregate stylesheet depending on environment
+// app.get('/style.css', function(req, res) {
+//   if (process.env.PRODUCTION) {
+//     res.sendFile(__dirname + '/client/build/style.css');
+//   } else {
+//     res.redirect('//localhost:9090/build/style.css');
+//   }
+// });
 
 app.use(express.static(__dirname + '/client/build'));
 
@@ -69,22 +69,22 @@ app.post('/home', function(req, res) {
  *
  *************************************************************/
 
-if (!process.env.PRODUCTION) {
-  var webpack = require('webpack');
-  var WebpackDevServer = require('webpack-dev-server');
-  var config = require('./client/webpack.local.config');
+// if (!process.env.PRODUCTION) {
+//   var webpack = require('webpack');
+//   var WebpackDevServer = require('webpack-dev-server');
+//   var config = require('./client/webpack.local.config');
 
-  new WebpackDevServer(webpack(config), {
-    publicPath: config.output.publicPath,
-    hot: true,
-    noInfo: true,
-    historyApiFallback: true
-  }).listen(9090, 'localhost', function (err, result) {
-    if (err) {
-      console.log(err);
-    }
-  });
-}
+//   new WebpackDevServer(webpack(config), {
+//     publicPath: config.output.publicPath,
+//     hot: true,
+//     noInfo: true,
+//     historyApiFallback: true
+//   }).listen(9090, 'localhost', function (err, result) {
+//     if (err) {
+//       console.log(err);
+//     }
+//   });
+// }
 
 
 

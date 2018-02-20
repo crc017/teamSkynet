@@ -36,7 +36,7 @@ var LoginPage = React.createClass({
                   </div> 
                 </div> 
                 <p id = "errorMessage"></p>
-              <button onClick={this.handlenewUser} type="submit" id="newUser" className="btn btn-white btn-outline btn-lg btn-rounded">New User?</button><br></br>
+              <button onClick={this.handlenewUser} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">New User?</button><br></br>
                 <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Login</button> 
               </form> 
             </div> 

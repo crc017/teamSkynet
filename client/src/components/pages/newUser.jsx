@@ -69,8 +69,10 @@ var NewUser = React.createClass({
               <input type="number" className="form-control input-md formin"  placeholder="162" id="mygoal"/> 
             </div>
           </div>
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Profile Picture:</label>
+          <input name="file" type="file" className="form-control-file" id="file" />
         </div> 
-        <button onClick={this.handleNewLogin} type="submit" id="newUser" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
+        <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
       </form> 
         
       </div>
@@ -79,7 +81,7 @@ var NewUser = React.createClass({
     );
   },
   handleNewLogin: function(e){
-    console.log("Consoled: " + $("#firstName").val().trim());
+    
 
     e.preventDefault();
     $("#createError").html('');
@@ -97,7 +99,11 @@ var NewUser = React.createClass({
   
     if(validateForm()){
 
-          fd.append('file',files);
+      var fd = new FormData();
+      fd.append('file', file);
+      var heightInches = (parseInt($("#feet").val().trim())*12 + parseInt($("#inches").val().trim()))
+      // console.log("Consoled: " + fd.get('file'));
+      // var userimage = $("#userName").val().trim();
             $.ajax({
                 method: "POST",
                 url: "/api/users",
@@ -109,12 +115,10 @@ var NewUser = React.createClass({
                   email: $("#email").val().trim(),
                   username: $("#userName").val().trim(),
                   password: $("#password").val().trim(),
-                  height: $("#feet").val().trim()*12 + $("#inches").val().trim(),
+                  height: heightInches.toString(),
                   weight: $("#weight").val().trim(),
-                  mygoal: $("#mygoal").val().trim(),
-                  image: $("profilePic").val()
+                  mygoal: $("#mygoal").val().trim()
                 },
-                dataType: "json"
             }).done(function (data) {
 
                
@@ -126,11 +130,13 @@ var NewUser = React.createClass({
                     window.location.href = '/';
                     //this.props.history.pushState(null, '/dashboard/overview');
                 };
-            }); 
+            });
+
     } else{
         $("#createError").html("Please complete all fields of form.");
     };
 
+   
     return false;
 
   }
