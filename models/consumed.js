@@ -2,9 +2,9 @@
  const Schema = mongoose.Schema;
 
 const consumedSchema = new Schema({
-    userid: {type: Number, required: true},
+    username: {type: String, required: true},
     date: {type: Date, required: true },
-    calories: {type: Number, required:true }
+    caloriesConsumed: {type: Number, required:true }
 });
 
 const Consumed = mongoose.model("Consumed", consumedSchema);     

@@ -3,12 +3,25 @@ import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import $ from 'jQuery';
-
 var person = React.createClass({
+  getInitialState: function() {
+    return {
+      tab: 'personal'
+    }
+  },
+  handleChangeInfo: function(evt){
+      this.setState({
+        tab: 'info'
+      })
+  },
+  handleChangePersonal: function(evt){
+    this.setState({
+      tab: 'personal'
+    })
+  },
   
   componentDidMount: function () {
     //setTimeout(this.load, 1000);
-
     $.ajax({
       url: "/api/userinfo",
       method: "GET"
@@ -18,7 +31,6 @@ var person = React.createClass({
       //img.src = objurl;
       //img.onload = function() {
       // do something with your image
-
       $("#fullName").html(user.firstName + ' ' + user.lastName);
       $("#userName").html("User Name: " + user.userName);
       $("#weight").html("Weight: " + user.weight + " lbs");
@@ -26,11 +38,12 @@ var person = React.createClass({
       // $("#userImage").attr({
       //     "src": user.image
       // });
-
   });
   },
   render: function() {
     return (
+<div>
+      {this.state.tab === 'personal' &&
       <div className="overview-page" key="calendar">  
         <h2>Your Personal Info</h2>
         
@@ -48,12 +61,20 @@ var person = React.createClass({
                 <h2>My Personal Goals</h2>
             </div>
         </div>
-        <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Edit Info</button>
+        <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded" onClick={this.handleChangeInfo}>Edit Info</button>
         </Jumbotron> 
       </div>
-      
-      
+    }
+    {this.state.tab === 'info' &&
+  <div>
+    test
+  <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded" onClick={this.handleChangePersonal}>Done</button>
+</div>
+  }
+</div> 
     );
   }
 });
 export default person;
+
+

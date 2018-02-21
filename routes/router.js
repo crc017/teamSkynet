@@ -83,7 +83,7 @@ router.post("/testMulter", function(req,res){
 //newUser
 //********************New User API**************************
 router.post("/api/users", function (req,res) {
-  console.log("Consoled " + req.body.username);
+  console.log("Consoled ",  req.body.image);
   
   db.User.findOne({
     userName: req.body.username
@@ -219,7 +219,66 @@ router.get("/api/userinfo", authMiddleware, function (req, res) { //authMiddlewa
 });
 
 
+//getRoutine
+//********************Retrieve User's Routines API**************************
 
+router.get("/api/routine", authMiddleware, function (req, res) { 
+
+  db.Routine.find({
+        userName: req.decoded.username
+  }).then((routine) => {
+
+    res.status(200).json(routine);
+
+  });
+
+});
+
+//****************************************************************/
+
+
+//postRoutine
+//********************Store User's Routines API**************************
+router.post("/api/routine", authMiddleware, function (req, res) {
+  //console.log("req.decoded.auth:  " + req.decoded.id);
+    db.Routine.create({
+      userName: req.decoded.username,
+      title: req.body.title,
+      reps: req.body.reps,
+      date: req.body.date,
+      caloriesBurned: req.body.calories
+    }).then((routine) => {
+      res.status(200).json({
+        message: "Successfully logged Workout."
+      })
+    })
+
+
+  })
+
+
+
+//****************************************************************/
+
+
+
+
+//getBurned
+//********************Retrieve User's Calories Burned API**************************
+
+router.get("/api/routine", authMiddleware, function (req, res) { 
+
+  db.Routine.findAll({
+        userName: req.decoded.username
+  }).then((routine) => {
+
+    res.status(200).json(routine);
+
+  });
+
+});
+
+//****************************************************************/
 
 //getBurned
 //********************Retrieve User's Calories Burned API**************************
@@ -358,7 +417,7 @@ function authMiddleware(req, res, next) {
 
     // if there is no token
     // return to login page
-    res.redirect('/');
+    res.redirect('/login');
   }
 }
 //****************************************************************/
