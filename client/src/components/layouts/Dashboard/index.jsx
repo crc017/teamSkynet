@@ -54,7 +54,7 @@ var HomePage = React.createClass({
               <div className="col-sm-3 col-md-2 sidebar" id="sidebar"> 
                 <div className="text-center"> 
                   <h2 className="brand"> FitHub <br /><small>Track Your Life</small></h2> 
-                  <img src={require("../../../common/images/flat-avatar.png")} className="user-avatar customImg" />
+                  <img href="../../pages/dashboard/PersonalInfo" src={require("../../../common/images/flat-avatar.png")} className="user-avatar customImg" />
                   <br /> 
                   <Link to="/login" className="btn btn-white btn-outline btn-rounded btn-sm">Logout</Link> 
                 </div> 

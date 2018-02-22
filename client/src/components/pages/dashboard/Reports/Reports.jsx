@@ -34,10 +34,11 @@ var Buttons = React.createClass({
       <div key="reports" className="reports-page">
         <div className="ng-scope"> 
           <Link to="/dashboard/overview" className="pull-right btn btn-primary btn-outline btn-rounded">Back to Overview</Link> 
-          <h2>Graphs</h2> 
+          <h2> Info </h2>
+          <h2 >Graphs</h2> 
           <h2>Calories</h2> 
           <div>
-            <Bar
+              <Bar
          data={data}
          width={100}
          height={400}
@@ -62,6 +63,8 @@ var Buttons = React.createClass({
            maintainAspectRatio: false
          }}
        /> 
+            }
+            
        </div>
       
     </div>

@@ -23,24 +23,35 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      tab: 'central',
       events: [
         {
           id: 0,
           title: 'Pushups: 20',
-          start: new Date(2018, 1, 15, 18.5),
-          end: new Date(2018, 1, 15, 19),
+          start: new Date(2018, 2, 20),
+          end: new Date(2018, 2, 20),
         },
         {
           id: 1,
           title: 'Situps: 50',
-          start: new Date(2018, 1, 15, 19),
-          end: new Date(2018, 1, 15, 20),
+          start: new Date(2018, 2, 20),
+          end: new Date(2018, 2, 20),
         }
       ]
     }
   }
 
   componentDidMount = () => {
+
+    $.ajax({
+      url: "/api/userinfo",
+      method: "GET"
+  }).done(function (user) {
+      
+    
+
+  });
+    
  //   this.getGoogleCalendarEvents()
   }
 
@@ -71,13 +82,59 @@ export default class Home extends Component {
       .catch(err => { throw new Error(err) })
   }
 */
-  render = () =>
-    <div>
-      <div className={styles['title']}>Exercie Calendar</div>
-      <div className={styles['calendar-container']}>
-        <BigCalendar events={this.state.events} />
-      </div>\
-    </div>
+handlePageChangeCentral = () => {
+  this.setState({
+    tab: 'central'
+  })
+}
 
+handlePageChangeCalendar = () => {
+  this.setState({
+    tab: 'calendar'
+  })
+}
+
+  render = () =>
+
+    <div>
+
+
+      <div className={styles['title']} onClick={this.handlePageChangeCentral}>Central Info</div>
+      <div className={styles['title']} onClick={this.handlePageChangeCalendar}>Exercie Calendar</div>
+      <div className={styles['calendar-container']}>
+        {this.state.tab === 'central' && <div> 
+        <h2>Your Personal Info</h2> 
+        <form role="form" onSubmit={this.NewLogin} className="ng-pristine ng-valid"> 
+        <div className="form-content"> 
+          <div className="form-group row"> 
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label radio" id="gen">Exercise</label>
+          <div className="col-sm-3">
+            <select className="form-control formin" id="sel1">
+              <option>Pushups</option>
+              <option>Situps</option>
+            </select>  
+          </div>
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Repetitions</label>
+            <div className="col-sm-1">
+          <input type="number" className="form-control input-md formin"  placeholder="5" id="mygoal"/> 
+        </div>
+        <br/>
+        <br/>
+          <div className="form-group row"> 
+              <label htmlFor="inputPassword" className="col-sm-2 col-form-label" id="birth">Birth Date</label>
+               <div className="col-sm-3">
+                <input id="birthdate" type="date" className="form-control input-md formin" placeholder="12/24/1932" />
+                  </div> 
+                  
+            </div>
+          </div>
+        </div> 
+        <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
+      </form>
+           </div>}
+        {this.state.tab === 'calendar' && <BigCalendar events={this.state.events} /> }
+      </div>
+
+    </div>
 }
 
