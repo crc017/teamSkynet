@@ -98,12 +98,17 @@ var NewUser = React.createClass({
     
   
     if(validateForm()){
-
+      
+      var reader = new FileReader();
+      console.log($("#file")[0]);
+      var file = reader.readAsDataURL($('#file')[0].files[0]);
       var fd = new FormData();
-      fd.append('file', file);
+      fd.append('file', file,);
+      console.log("File", file, $('#file'));
       var heightInches = (parseInt($("#feet").val().trim())*12 + parseInt($("#inches").val().trim()))
       // console.log("Consoled: " + fd.get('file'));
       // var userimage = $("#userName").val().trim();
+
             $.ajax({
                 method: "POST",
                 url: "/api/users",
@@ -117,7 +122,8 @@ var NewUser = React.createClass({
                   password: $("#password").val().trim(),
                   height: heightInches.toString(),
                   weight: $("#weight").val().trim(),
-                  mygoal: $("#mygoal").val().trim()
+                  mygoal: $("#mygoal").val().trim(),
+                  image: file
                 },
             }).done(function (data) {
 

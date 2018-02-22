@@ -3,21 +3,17 @@ import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import $ from 'jQuery';
-
 var person = React.createClass({
-
   getInitialState: function() {
     return {
       tab: 'personal'
     }
   },
-
   handleChangeInfo: function(evt){
       this.setState({
         tab: 'info'
       })
   },
-
   handleChangePersonal: function(evt){
     this.setState({
       tab: 'personal'
@@ -26,7 +22,6 @@ var person = React.createClass({
   
   componentDidMount: function () {
     //setTimeout(this.load, 1000);
-
     $.ajax({
       url: "/api/userinfo",
       method: "GET"
@@ -36,7 +31,6 @@ var person = React.createClass({
       //img.src = objurl;
       //img.onload = function() {
       // do something with your image
-
       $("#fullName").html(user.firstName + ' ' + user.lastName);
       $("#userName").html("User Name: " + user.userName);
       $("#weight").html("Weight: " + user.weight + " lbs");
@@ -44,7 +38,6 @@ var person = React.createClass({
       // $("#userImage").attr({
       //     "src": user.image
       // });
-
   });
   },
   render: function() {
@@ -83,3 +76,5 @@ var person = React.createClass({
   }
 });
 export default person;
+
+

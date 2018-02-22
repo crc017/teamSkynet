@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-
+import $ from 'jQuery'
 //import { GOOGLE_API_KEY } from '../../../../js/config.js'
 //import GoogleCalendar from '../../../../utils/GoogleCalendar'
-
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import styles from './Home.scss'
-
 // use Moment.js to localize react-big-calendar
 BigCalendar.momentLocalizer(moment)
-
 const calendars = [
   {
     name: 'demo',
@@ -42,19 +39,99 @@ export default class Home extends Component {
   }
 
   componentDidMount = () => {
-
     $.ajax({
-      url: "/api/userinfo",
-      method: "GET"
-  }).done(function (user) {
-      
-    
+            url: "/api/routine",
+            method: "GET"
+           })
+          // .done(function (routine) {
+          //   console.log("Routine 0", routine[0].reps);
+          // })
+          // .then(res => res.json())
+          .done((routine) => {
+            var allWorkouts = []; 
+          for(let i=0; i<routine.length; i++){
+          var workout = {
+              id: i,
+              title: routine[i].title + ": " + routine[i].reps,
+              start: routine[i].date,
+              end: routine[i].date
+            }
+            allWorkouts.push(workout);
+          };
+            console.log("Results ", allWorkouts);
+              this.setState({
+                events: allWorkouts
+              });
+            }
+          )
+    // this.state = {
+    //   events: [
+    //                   {
+    //                     id: 0,
+    //                     title: 'Pushups: 20',
+    //                     start: new Date(2018, 2, 20),
+    //                     end: new Date(2018, 2, 20),
+    //                   },
+    //                   {
+    //                     id: 1,
+    //                     title: 'Situps: 50',
+    //                     start: new Date(2018, 2, 20),
+    //                     end: new Date(2018, 2, 20),
+    //                   }
+    //                 ]
+    // }
 
-  });
-    
- //   this.getGoogleCalendarEvents()
+//     const allWorkouts;
+// $.ajax({
+//       url: "/api/routine",
+//       method: "GET"
+//     }).done(function (routine) {
+        
+//       if(routine){
+
+//           console.log(routine[0]);
+//           allWorkouts = []; 
+//           for(i=0; i<routine.length; i++){
+//           var workout = {
+//               id: i,
+//               title: routine[i].title,
+//               start: routine[i].date,
+//               end: routine[i].date
+//             }
+//             allWorkouts.push(workout);
+//           };
+//         return allWorkouts;
+//         } else{
+//           allWorkouts = [
+//               {
+//                 id: 0,
+//                 title: 'Pushups: 20',
+//                 start: new Date(2018, 2, 20),
+//                 end: new Date(2018, 2, 20),
+//               },
+//               {
+//                 id: 1,
+//                 title: 'Situps: 50',
+//                 start: new Date(2018, 2, 20),
+//                 end: new Date(2018, 2, 20),
+//               }
+//             ]
+//           }
+
+
+
+//       });
   }
 
+
+    //   this.getGoogleCalendarEvents()
+
+ //   this.getGoogleCalendarEvents()
+  
+
+
+
+  
  // getGoogleCalendarEvents = () => {
     /*
      * @param {string} GOOGLE_API_KEY - your Google API key
@@ -82,6 +159,10 @@ export default class Home extends Component {
       .catch(err => { throw new Error(err) })
   }
 */
+
+
+
+
 handlePageChangeCentral = () => {
   this.setState({
     tab: 'central'
@@ -94,11 +175,9 @@ handlePageChangeCalendar = () => {
   })
 }
 
-  render = () =>
 
+  render = () => 
     <div>
-
-
       <div className={styles['title']} onClick={this.handlePageChangeCentral}>Central Info</div>
       <div className={styles['title']} onClick={this.handlePageChangeCalendar}>Exercie Calendar</div>
       <div className={styles['calendar-container']}>
@@ -107,34 +186,67 @@ handlePageChangeCalendar = () => {
         <form role="form" onSubmit={this.NewLogin} className="ng-pristine ng-valid"> 
         <div className="form-content"> 
           <div className="form-group row"> 
-          <label htmlFor="inputPassword" className="col-sm-2 col-form-label radio" id="gen">Exercise</label>
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label radio">Exercise</label>
           <div className="col-sm-3">
-            <select className="form-control formin" id="sel1">
+            <select className="form-control formin" id="workout">
               <option>Pushups</option>
               <option>Situps</option>
             </select>  
           </div>
           <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Repetitions</label>
             <div className="col-sm-1">
-          <input type="number" className="form-control input-md formin"  placeholder="5" id="mygoal"/> 
+          <input type="number" className="form-control input-md formin"  placeholder="5" id="reps"/> 
         </div>
         <br/>
         <br/>
           <div className="form-group row"> 
-              <label htmlFor="inputPassword" className="col-sm-2 col-form-label" id="birth">Birth Date</label>
+              <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Date</label>
                <div className="col-sm-3">
-                <input id="birthdate" type="date" className="form-control input-md formin" placeholder="12/24/1932" />
+                <input id="date" type="date" className="form-control input-md formin" placeholder="2/24/2018" />
                   </div> 
                   
             </div>
           </div>
         </div> 
-        <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
+        <button onClick={this.handleNewWorkout} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
       </form>
            </div>}
         {this.state.tab === 'calendar' && <BigCalendar events={this.state.events} /> }
       </div>
-
     </div>
-}
+  
+  
+
+
+  handleNewWorkout = (e) => {
+    e.preventDefault();
+    var postSelection;
+  $.ajax({
+    method: "POST",
+    url: "/api/routine",
+    data: {
+      title: $("#workout").val().trim(),
+      reps: $("#reps").val().trim(),
+      date: $("#date").val().trim()
+    },
+  }).done(function (data) {
+    
+    
+    if(!data.success){
+      postSelection = 'central'
+      
+    } else{
+      postSelection = 'calendar'
+
+  
+        //window.location.href = '/';
+        //this.props.history.pushState(null, '/dashboard/overview');
+    };
+  })
+  this.setState({
+    tab: postSelection
+  })
+  };
+
+};
 
