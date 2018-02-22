@@ -53,8 +53,8 @@ export default class Home extends Component {
           var workout = {
               id: i,
               title: routine[i].title + ": " + routine[i].reps,
-              start: routine[i].date,
-              end: routine[i].date
+              start: new Date(routine[i].date),
+              end: new Date(routine[i].date)
             }
             allWorkouts.push(workout);
           };
@@ -178,8 +178,8 @@ handlePageChangeCalendar = () => {
 
   render = () => 
     <div>
-      <div className={styles['title']} onClick={this.handlePageChangeCentral}>Central Info</div>
-      <div className={styles['title']} onClick={this.handlePageChangeCalendar}>Exercie Calendar</div>
+      <div className={styles['title'] + 'pull-right btn btn-primary btn-outline btn-rounded'} onClick={this.handlePageChangeCentral}>Central Info</div>
+      <div className={styles['title'] + 'pull-right btn btn-primary btn-outline btn-rounded'} onClick={this.handlePageChangeCalendar}>Exercie Calendar</div>
       <div className={styles['calendar-container']}>
         {this.state.tab === 'central' && <div> 
         <h2>Your Personal Info</h2> 
@@ -191,6 +191,11 @@ handlePageChangeCalendar = () => {
             <select className="form-control formin" id="workout">
               <option>Pushups</option>
               <option>Situps</option>
+              <option>Pull-Ups</option>
+              <option>Chin-Ups</option>
+              <option>Burpees</option>
+              <option>Squats</option>
+              <option>Lunges</option>
             </select>  
           </div>
           <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Repetitions</label>
@@ -221,13 +226,16 @@ handlePageChangeCalendar = () => {
   handleNewWorkout = (e) => {
     e.preventDefault();
     var postSelection;
+    var day = $("#date").val().trim();
+    var newDay = moment(day, 'YYYY-MM-DD').format('YYYY, MM, DD');
+
   $.ajax({
     method: "POST",
     url: "/api/routine",
     data: {
       title: $("#workout").val().trim(),
       reps: $("#reps").val().trim(),
-      date: $("#date").val().trim()
+      date: newDay
     },
   }).done(function (data) {
     

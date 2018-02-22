@@ -68,9 +68,6 @@ var HomePage = React.createClass({
                   </li>
                   <li>
                     <Link to="/dashboard/reports">Diet</Link>
-                  </li> 
-                  <li>
-                    <a href="http://startangular.com/product/ani-theme/">Shop</a>
                   </li>
                 </ul> 
               </div>
