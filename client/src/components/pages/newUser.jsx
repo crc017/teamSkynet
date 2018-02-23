@@ -46,7 +46,7 @@ var NewUser = React.createClass({
                   </div> 
                   <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Password</label>
                 <div className="col-sm-3">
-              <input id="password" type="text" className="form-control input-md formin" placeholder="12345" /> 
+              <input id="newPassword" type="text" className="form-control input-md formin" placeholder="12345" /> 
             </div>
           </div>
           <div className="form-group row"> 
@@ -72,8 +72,8 @@ var NewUser = React.createClass({
               <input type="number" className="form-control input-md formin"  placeholder="162" id="mygoal"/> 
             </div>
           </div>
-          <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Profile Picture:</label>
-          <input name="file" type="file" className="form-control-file" id="file" />
+          {/* <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Profile Picture:</label>
+          <input name="file" type="file" className="form-control-file" id="file" /> */}
         </div> 
         <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
       </form> 
@@ -88,72 +88,72 @@ var NewUser = React.createClass({
 
     e.preventDefault();
     $("#createError").html('');
-    console.log("File is: " + $("#file")[0].files[0]);
-    console.log("File", file, $('#file'));
+    //console.log("File is: " + $("#file")[0].files[0]);
+    //console.log("File", file, $('#file'));
     //console.log("DataURL: " + $('#file')[0].files[0].toDataURL());
     
 
-    var base64String;
+  //   var base64String;
 
-    function getDataUri(url, callback) {
-      var image = new Image();
+  //   function getDataUri(url, callback) {
+  //     var image = new Image();
   
-      image.onload = function () {
-          var canvas = document.createElement('canvas');
-          canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-          canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+  //     image.onload = function () {
+  //         var canvas = document.createElement('canvas');
+  //         canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+  //         canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
   
-          canvas.getContext('2d').drawImage(this, 0, 0);
+  //         canvas.getContext('2d').drawImage(this, 0, 0);
   
-          // Get raw image data
-          callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+  //         // Get raw image data
+  //         callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
   
-          // ... or get as Data URI
-          callback(canvas.toDataURL('image/png'));
-      };
+  //         // ... or get as Data URI
+  //         callback(canvas.toDataURL('image/png'));
+  //     };
   
-      image.src = url;
-  }
+  //     image.src = url;
+  // }
 //   getDataUri($("#file")[0].files[0], function(dataUri) {
 //     // Do whatever you'd like with the Data URI!
     
 //     return dataUri;
 // });
-console.log("Data URI: " + getDataUri($("#file")[0]));
+//console.log("Data URI: " + getDataUri($("#file")[0]));
 
   
-    function imageToBase64(img)
-    {
-      var f = img.files[0]; // FileList object    
-      var reader = new FileReader();  
-      // Closure to capture the file information.    
-      reader.onload = (function (theFile)  
-      {  
+    // function imageToBase64(img)
+    // {
+    //   var f = img.files[0]; // FileList object    
+    //   var reader = new FileReader();  
+    //   // Closure to capture the file information.    
+    //   reader.onload = (function (theFile)  
+    //   {  
         
-          return function (e)  
-          {  
+    //       return function (e)  
+    //       {  
               
-              var binaryData = e.target.result;  
-              //Converting Binary Data to base 64    
-              base64String = window.btoa(binaryData);  
-              //showing file converted to base64   
-              console.log('Binary String: ' + base64String); 
-              // document.getElementById('base64')  
-              //     .value = base64String;  
-              //$("#file")
-              // alert('File converted to base64 successfuly!\nCheck in Textarea');  
-              return base64String;
-          };  
-      })
+    //           var binaryData = e.target.result;  
+    //           //Converting Binary Data to base 64    
+    //           base64String = window.btoa(binaryData);  
+    //           //showing file converted to base64   
+    //           console.log('Binary String: ' + base64String); 
+    //           // document.getElementById('base64')  
+    //           //     .value = base64String;  
+    //           //$("#file")
+    //           // alert('File converted to base64 successfuly!\nCheck in Textarea');  
+    //           return base64String;
+    //       };  
+    //   })
 
-    console.log('Binary String: ' + base64String); 
-      (f);  
-      // Read in the image file as a data URL.    
-      console.log("Reader reads: " + reader.readAsBinaryString(f));  
+    // console.log('Binary String: ' + base64String); 
+    //   (f);  
+    //   // Read in the image file as a data URL.    
+    //   console.log("Reader reads: " + reader.readAsBinaryString(f));  
   
         
-    };
-     console.log("imageToBase64: " + imageToBase64($("#file")[0]));
+    // };
+    //  console.log("imageToBase64: " + imageToBase64($("#file")[0]));
 
 
 
@@ -174,29 +174,30 @@ console.log("Data URI: " + getDataUri($("#file")[0]));
     if(validateForm()){
       
       var reader = new FileReader();
-      console.log($("#file")[0]);
-      var file = reader.readAsDataURL($('#file')[0].files[0]);
+      //console.log($("#file")[0]);
+      //var file = reader.readAsDataURL($('#file')[0].files[0]);
       var fd = new FormData();
-      fd.append('file', file,);
-      console.log("File", file, $('#file'));
+      //fd.append('file', file,);
+      //console.log("File", file, $('#file'));
       var heightInches = (parseInt($("#feet").val().trim())*12 + parseInt($("#inches").val().trim()))
       // console.log("Consoled: " + fd.get('file'));
       // var userimage = $("#userName").val().trim();
 
 
-      function imageToBase64(img)
-      {
-          var canvas, ctx, dataURL, base64;
-          canvas = document.createElement("canvas");
-          ctx = canvas.getContext("2d");
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
-          dataURL = canvas.toDataURL("image/png");
-          base64 = dataURL.replace(/^data:image\/png;base64,/, "");
-          return base64;
-      };
-      console.log("imageToBase64: " + imageToBase64($("#file")));
+      // function imageToBase64(img)
+      // {
+      //     var canvas, ctx, dataURL, base64;
+      //     canvas = document.createElement("canvas");
+      //     ctx = canvas.getContext("2d");
+      //     canvas.width = img.width;
+      //     canvas.height = img.height;
+      //     ctx.drawImage(img, 0, 0);
+      //     dataURL = canvas.toDataURL("image/png");
+      //     base64 = dataURL.replace(/^data:image\/png;base64,/, "");
+      //     return base64;
+      // };
+      
+      //console.log("imageToBase64: " + imageToBase64($("#file")));
             $.ajax({
                 method: "POST",
                 url: "/api/users",
@@ -207,11 +208,11 @@ console.log("Data URI: " + getDataUri($("#file")[0]));
                   birthdate: $("#birthdate").val().trim(),
                   email: $("#email").val().trim(),
                   username: $("#userName").val().trim(),
-                  password: $("#password").val().trim(),
+                  password: $("#newPassword").val().trim(),
                   height: heightInches.toString(),
                   weight: $("#weight").val().trim(),
                   mygoal: $("#mygoal").val().trim(),
-                  image: imageToBase64($("#file"))
+                  //image: imageToBase64($("#file"))
                 },
             }).done(function (data) {
 

@@ -1,24 +1,18 @@
 // wiredep-removed:bower:less
 // wiredep-removed:endbower
-
 @import "less/bootstrap.less";
-
 // Base
 @import "base.less";
-
 // Pages
 @import "pages/login.less";
 @import "pages/dashboard.less";
-
 // Widgets and Effects
 @import "widgets/input-underline.less";
 // @import "../../bower_components/bootstrap-btn-outline-rounded/index.less";
 @import "index.less";
 @import "transitions/all.less";
-
 @import "~font-awesome/less/font-awesome.less";
 @import "~nprogress/nprogress.css";
-
 // Other
 .browsehappy {
   margin: 0.2em 0;
@@ -26,65 +20,51 @@
   color: #000;
   padding: 0.2em 0;
 }
-
 html,body {
-	overflow: hidden;
+    overflow: hidden;
 }
-
-
 .example-enter {
   opacity: 0.01;
   transition: opacity .5s ease-in;
 }
-
 .example-enter.example-enter-active {
   opacity: 1;
 }
-
 .customImg {
   border-radius: 100px;
   opacity: .75;
 }
-
 .example-leave {
   opacity: 1;
   transition: opacity .5s ease-in;
 }
-
 .example-leave.example-leave-active {
   opacity: 0.01;
 }
-
 .login-page {
   background: darkslategray;
   background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 950, from(#000), to(slategray));
 }
-
 .profilePannel {
-  width: 280px;
-  height: 15em;
-  margin-right: 10px;
+  margin-right: 175px;
 }
-
-
-
+.profilePannel:last-child {
+  margin-right: 0px;
+}
 .profileJumbo {
   text-align: center;
   align-content: center;
   }
-
 #personalInfo {
   background-image: url('../images/profile.jpeg');
   background-size: cover;
   color: black;
 }
-
 #eCalendar {
   background-image: url('../images/calendar.png');
   background-size: cover;
   color: black;
 }
-
 #calendarText {
   margin-top: 70%;
   font-size: 20px;
@@ -92,13 +72,11 @@ html,body {
   border-style: groove;
   border-width: 2px;
 }
-
 #meals {
   background-image: url('../images/meals.png');
   background-size: cover;
   color: black;
 }
-
 #mealText {
   margin-top: 70%;
   font-size: 20px;
@@ -106,13 +84,11 @@ html,body {
   border-style: groove;
   border-width: 2px;
 }
-
 #shop {
   background-image: url('../images/shop.png');
   background-size: cover;
   color: black;
 }
-
 #shopText {
   margin-top: 70%;
   font-size: 20px;
@@ -120,11 +96,9 @@ html,body {
   border-style: groove;
   border-width: 2px;
 }
-
 #goals {
   
 }
-
 .infoText {
   margin-top: 70%;
   font-size: 20px;
@@ -132,30 +106,24 @@ html,body {
   border-style: groove;
   border-width: 2px;
 }
-
 #sidebar {
   background: linear-gradient(black, slategray)
 }
-
 #profileJumbo {
   background: radial-gradient(slategray 30%, black 100%, slategray 10%);
   opacity: .90;
 }
-
 #overview {
   background-image: url('../images/exercise.png');
   background-size: cover;
 }
-
 .hint {
   color:white;
 }
-
 .formin {
   background-color: #4e4b4b;
   color: white;
 }
-
 .hint {
   color:white;
  }
@@ -178,7 +146,99 @@ html,body {
  h4, p {
   color: white;
  }
-
  .overviewText {
   text-align: left;
  }
+ 
+ .hvr-bounce-in {
+   -webkit-transform: translateZ(0);
+   transform: translateZ(0);
+   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+   -webkit-backface-visibility: hidden;
+   backface-visibility: hidden;
+   -moz-osx-font-smoothing: grayscale;
+   -webkit-transition-duration: 0.2s;
+   transition-duration: 0.2s;
+ }
+
+ .hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
+  -webkit-animation:rainbow 3s infinite;
+  -ms-animation:rainbow 3s infinite;
+  -o-animation:rainbow 3s infinite;
+  animation:rainbow 3s infinite;
+
+  
+  @-webkit-keyframes rainbow {
+  0% {color: grey;}
+  10% {color: darkslategray;}
+  20% {color: dimgray;}
+  30% {color: lightgray;}
+  40% {color: black;}
+  50% {color: white;}
+  60% {color: grey;}
+  70% {color: darkslategray;}
+  80% {color: dimgray;}
+  90% {color: lightgray;}
+  100% {color: black;}
+  }
+  @-ms-keyframes rainbow {
+    0% {color: grey;}
+    10% {color: darkslategray;}
+    20% {color: dimgray;}
+    30% {color: lightgray;}
+    40% {color: black;}
+    50% {color: white;}
+    60% {color: grey;}
+    70% {color: darkslategray;}
+    80% {color: dimgray;}
+    90% {color: lightgray;}
+    100% {color: black;}
+  }
+  @-o-keyframes rainbow {
+    0% {color: grey;}
+    10% {color: darkslategray;}
+    20% {color: dimgray;}
+    30% {color: lightgray;}
+    40% {color: black;}
+    50% {color: white;}
+    60% {color: grey;}
+    70% {color: darkslategray;}
+    80% {color: dimgray;}
+    90% {color: lightgray;}
+    100% {color: black;}
+  }
+  @keyframes rainbow {
+    0% {color: grey;}
+    10% {color: darkslategray;}
+    20% {color: dimgray;}
+    30% {color: lightgray;}
+    40% {color: black;}
+    50% {color: white;}
+    60% {color: grey;}
+    70% {color: darkslategray;}
+    80% {color: dimgray;}
+    90% {color: lightgray;}
+    100% {color: black;}
+  }
+   -webkit-transform: scale(1.1);
+   transform: scale(1.1);
+   -webkit-transition-timing-function: cubic-bezier(1, 1, 1, 1);
+   transition-timing-function: cubic-bezier(1, 1, 1, 1);
+}
+.hvr-bounce:hover, .hvr-bounce:focus, .hvr-bounce:active{
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  -webkit-transition-timing-function: cubic-bezier(1, 1, 1, 1);
+  transition-timing-function: cubic-bezier(1, 1, 1, 1);
+}
+
+.lab {
+  font-size: 1.5vw;
+  color: white;
+}
+
+.exc {
+  width: 110%;
+  height: 100%;
+  block: center;
+}

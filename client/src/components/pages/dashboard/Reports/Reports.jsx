@@ -49,56 +49,48 @@ const data = {
         <div className="ng-scope"> 
         
         <button onClick={this.handlechangeInfo} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Calories</button><br></br>
-    <Link to="/dashboard/overview" className="pull-right btn btn-primary btn-outline btn-rounded">Back to Overview</Link> 
+        <button onClick={this.handlechangeGraph} type="submit"  className="btn btn-white btn-outline btn-lg btn-rounded">Graphs</button><br></br>
           <div>
             
-            {this.state.tab === 'info' &&
-            
-            
-            
-            
-            
-            
-            <div className="login-page ng-scope ui-view" > 
-            <div style={{ textAlign: "left" }}>
-            <button onClick={this.handlechangeGraph} type="submit"  className="btn btn-white btn-outline btn-lg btn-rounded">Graphs</button><br></br>
-            </div>
-            
-             
-            
-            <h2>Daily Calories and Goals</h2> 
-            
-            
-            <form role="form" onSubmit={this.GandCB} className="ng-pristine ng-valid"> 
-            <div className="form-content"> 
-              <div className="form-group row"> 
-                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="MonCal">Monday</label>
-                   <div className="col-sm-3">
-                    <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                    <br></br></div>
-                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="TueCal">Tuesday</label>
-                    <div className="col-sm-3">
-                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                      <br></br></div> 
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="WedCal">Wednesday</label>
-                   <div className="col-sm-3">
-                    <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                    <br></br></div>
-                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="ThurCal">Thursday</label>
-                    <div className="col-sm-3">
-                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                      <br></br></div> 
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="FriCal">Friday</label>
-                    <div className="col-sm-3">
-                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                      <br></br></div> 
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="SatCal">Saturday</label>
-                    <div className="col-sm-3">
-                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                      <br></br></div> 
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="SunCal">Sunday</label>
-                    <div className="col-sm-3">
-                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+          {this.state.tab === 'info' &&
+            <div style={{textAlign: "center"}} className="reports-page" > 
+              <h2>Daily Calories and Goals</h2> 
+                <form role="form" onSubmit={this.GandCB} className="ng-pristine ng-valid"> 
+                  <div className="form-content"> 
+                    <div className="form-group row"> 
+                      <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Monday</label>
+                        <div className="col-sm-3">
+                           <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                            <br></br>
+                        </div>
+                          <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="TueCal">Tuesday</label>
+                          <div className="col-sm-3">
+                              <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                              <br></br>
+                          </div> 
+                            <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="WedCal">Wednesday</label>
+                            <div className="col-sm-3">
+                                <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                                <br></br>
+                            </div>
+                              <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="ThurCal">Thursday</label>
+                              <div className="col-sm-3">
+                                  <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                                  <br></br>
+                              </div> 
+                                <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="FriCal">Friday</label>
+                              <div className="col-sm-3">
+                                  <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                                  <br></br>
+                            </div> 
+                              <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="SatCal">Saturday</label>
+                          <div className="col-sm-3">
+                              <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                              <br></br>
+                          </div> 
+                            <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="SunCal">Sunday</label>
+                        <div className="col-sm-3">
+                            <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
                         </div> 
                     </div>
             </div> 
@@ -110,7 +102,7 @@ const data = {
               <Bar
          data={data}
          width={100}
-         height={400}
+         height={700}
          options={{
            legend: {
              labels:{

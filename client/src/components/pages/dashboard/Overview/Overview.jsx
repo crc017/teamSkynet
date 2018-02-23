@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from "react-router";
 import {Jumbotron, Modal, Panel} from 'react-bootstrap';
 import $ from "jQuery";
-
 var Blank = React.createClass({
   
   componentWillMount: function(){
@@ -26,22 +25,28 @@ var Blank = React.createClass({
         <h2>Home</h2> 
         <Jumbotron className='profileJumbo' id="profileJumbo">
           <div className="row">
-            <Panel  className="profilePannel col-sm-4" id="personalInfo" >
+            <Panel  className="profilePannel hvr-bounce col-sm-3" id="personalInfo" >
               <p className="infoText">
               <Link style={{color: 'white'}} activeStyle={{color: 'white'}} to="/dashboard/personalinfo">Profile</Link>
               </p>
             </Panel>
-          <Panel className="profilePannel col-sm-2" id="eCalendar"><p id="calendarText">Exercise Calendar</p></Panel>
-          <Panel className="profilePannel col-sm-2" id="meals"><p id="mealText">Meal Ideas</p></Panel>
+          <Panel className="profilePannel col-sm-3 hvr-bounce" id="eCalendar">
+          <p className="infoText">
+              <Link style={{color: 'white'}} activeStyle={{color: 'white'}} to="/dashboard/Calendar">Exercise Calendar</Link>
+              </p>
+          </Panel>
+          <Panel className="profilePannel col-sm-3 hvr-bounce" id="meals">
+          <p className="infoText">
+              <a style={{color: 'white'}} activeStyle={{color: 'white'}} href="http://www.delish.com/healthy-recipes/"target="_blank">Meal Ideas</a>
+              </p>
+          </Panel>
           </div>
-          <p> <a className="btn btn-primary btn-lg btn-outline btn-rounded">Learn more</a> </p> 
+          <p> <a className="btn btn-primary btn-lg btn-outline btn-rounded hvr-bounce">Learn more</a> </p> 
         </Jumbotron> 
       </div>
       
       
     );
   }
-
 });
-
 export default Blank;

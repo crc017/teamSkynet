@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
+import {Jumbotron} from 'react-bootstrap';
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import $ from 'jQuery'
+import burpee from '../../../../common/images/burpee.gif'
+import chinup from '../../../../common/images/chinup.gif'
+import lunge from '../../../../common/images/lunge.gif'
+import pullup from '../../../../common/images/pullup.gif'
+import pushup from '../../../../common/images/pushup.gif'
+import squat from '../../../../common/images/squat.gif'
+import situp from '../../../../common/images/situp.gif'
 //import { GOOGLE_API_KEY } from '../../../../js/config.js'
 //import GoogleCalendar from '../../../../utils/GoogleCalendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -34,11 +42,50 @@ export default class Home extends Component {
           start: new Date(2018, 2, 20),
           end: new Date(2018, 2, 20),
         }
-      ]
+      ],
+      value: pushup,
+      options: [
+        {
+          name: 'Pushups',
+          value: pushup,
+        },
+        {
+          name: 'Situps',
+          value: situp,
+        },
+        {
+          name: 'Pull-Ups',
+          value: pullup,
+        },
+        {
+          name: 'Chin-Ups',
+          value: chinup,
+        },
+        {
+          name: 'Squat',
+          value: squat,
+        },
+        {
+          name: 'Lunge',
+          value: lunge,
+        },
+        {
+          name: 'Burpee',
+          value: burpee,
+        }
+      ],
     }
   }
 
+  change = function(event){
+    this.setState({image: event.target.value});
+    console.log(this.state.image)
+}
+
   componentDidMount = () => {
+
+    $("#workout").className = "form-control formin"
+
     $.ajax({
             url: "/api/routine",
             method: "GET"
@@ -175,28 +222,69 @@ handlePageChangeCalendar = () => {
   })
 }
 
+handlePush = () => {
+  this.setState({
+    image: pushup
+  })
+}
 
-  render = () => 
+handleSit = () => {
+  this.setState({
+    image: situp
+  })
+} 
+
+  render = () => {
+    const createItem = (item, key) =>
+    <option
+      key={key}
+      value={item.value}
+    >
+      {item.name}
+    </option>;
+  return (
+
     <div>
-      <div className={styles['title'] + 'pull-right btn btn-primary btn-outline btn-rounded'} onClick={this.handlePageChangeCentral}>Central Info</div>
-      <div className={styles['title'] + 'pull-right btn btn-primary btn-outline btn-rounded'} onClick={this.handlePageChangeCalendar}>Exercie Calendar</div>
+      <div> 
+         <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCalendar}>Exercie Calendar</button>
+      </div>
+      <div>
+          <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCentral}>Central Intelligence</button>
+      </div>
       <div className={styles['calendar-container']}>
-        {this.state.tab === 'central' && <div> 
+        {this.state.tab === 'central' && 
+        <div style={{textAlign: "center"}}> 
         <h2>Your Personal Info</h2> 
         <form role="form" onSubmit={this.NewLogin} className="ng-pristine ng-valid"> 
         <div className="form-content"> 
           <div className="form-group row"> 
           <label htmlFor="inputPassword" className="col-sm-2 col-form-label radio">Exercise</label>
           <div className="col-sm-3">
-            <select className="form-control formin" id="workout">
-              <option>Pushups</option>
-              <option>Situps</option>
-              <option>Pull-Ups</option>
-              <option>Chin-Ups</option>
-              <option>Burpees</option>
-              <option>Squats</option>
-              <option>Lunges</option>
-            </select>  
+
+
+
+          <select id="workout" 
+          onChange={event => this.setState({ value: event.target.value })}
+          value={this.state.value}
+        >
+          {this.state.options.map(createItem)}
+        </select>
+            {/* <select className="form-control formin" id="workout" onChange={this.change} value={this.state.value}>
+            onChange={event => this.setState({ value: event.target.value })}
+            value={this.state.value}
+          >
+            {this.state.options.map(createItem)}
+        </select> */}
+
+
+
+              {/* <option value="pushup">Pushups</option>
+              <option value="situp">Situps</option>
+              <option value="pull-up">Pull-Ups</option>
+              <option value="chin-up">Chin-Ups</option>
+              <option value="burpee">Burpees</option>
+              <option value="squat">Squats</option>
+              <option value="lunge">Lunges</option>  */}
           </div>
           <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Repetitions</label>
             <div className="col-sm-1">
@@ -211,17 +299,31 @@ handlePageChangeCalendar = () => {
                   </div> 
                   
             </div>
+                <div >
+                <img className="exc"  style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '50%', width: '50%'}} src={this.state.value}/>
+                </div>
           </div>
         </div> 
         <button onClick={this.handleNewWorkout} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
       </form>
            </div>}
-        {this.state.tab === 'calendar' && <BigCalendar events={this.state.events} /> }
+        {this.state.tab === 'calendar' && 
+        <Jumbotron style={{height: "100%"}}>
+        <BigCalendar events={this.state.events} /> 
+        </Jumbotron>
+      }
       </div>
     </div>
   
-  
-
+  )}
+  // changeFunc = () => {
+  //   var selectBox = document.getElementById("workout");
+  //   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  //   console.log(selectedValue);
+  //   this.setState({
+  //     image: selectedValue
+  //   })
+  //  }
 
   handleNewWorkout = (e) => {
     e.preventDefault();

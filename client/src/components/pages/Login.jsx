@@ -4,9 +4,7 @@ import {Panel, Input, Button} from 'react-bootstrap';
 import { History } from 'history';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import $ from "jQuery";
-
 var LoginPage = React.createClass({
-
   getInitialState: function(){
     return {
       loginID: '',
@@ -14,8 +12,6 @@ var LoginPage = React.createClass({
       isSubmitted: false
     };
   },
-
-
   render: function(){
   
     return(
@@ -29,15 +25,15 @@ var LoginPage = React.createClass({
               <form role="form" onSubmit={this.handleLogin} className="ng-pristine ng-valid"> 
                 <div className="form-content"> 
                   <div className="form-group"> 
-                    <input id="username" type="text" className="form-control input-underline input-lg" placeholder="Email" /> 
+                    <input id="username" type="text" className="hvr-bounce form-control input-underline input-lg" placeholder="Email" /> 
                   </div> 
                   <div className="form-group"> 
-                    <input type="password" id="password" className="form-control input-underline input-lg" placeholder="Password" /> 
+                    <input type="password" id="password" className="hvr-bounce form-control input-underline input-lg" placeholder="Password" /> 
                   </div> 
                 </div> 
                 <p id = "errorMessage"></p>
-              <button onClick={this.handlenewUser} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">New User?</button><br></br>
-                <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Login</button> 
+                <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded hvr-bounce-in">Login</button> <br></br>
+              <button onClick={this.handlenewUser} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded hvr-bounce-in">New User?</button>
               </form> 
             </div> 
           </div> 
@@ -45,25 +41,18 @@ var LoginPage = React.createClass({
       
     );
       
-
   },
-
   setLoginID: function(e) {
-
     this.setState({
       loginID: e.target.value,
       loginError: ''
     });
-
   },
-
   setPassword: function(e) {
-
     this.setState({
       password: e.target.value,
       loginError: ''
     });
-
   },
   handleLogin: function(e){
     e.preventDefault();
@@ -75,7 +64,6 @@ var LoginPage = React.createClass({
         password: $("#password").val().trim()
       }
   }).done(function (data) {
-
       if (data.success) {
           window.location.href = '#/dashboard/overview';
           this.props.history.pushState(null, '/dashboard/overview');
@@ -84,31 +72,20 @@ var LoginPage = React.createClass({
           $("#errorMessage").html(data.message);
           //window.location.href = '/login';
       }
-
-
   });
-
     //this.props.history.pushState(null, '/dashboard/overview');
     
     // this.transitionTo('dashboard');
-
     return false;
-
   },
-
   handlenewUser: function(e){
-
     e.preventDefault();
     this.props.history.pushState(null, '/newUser');
     
     // this.transitionTo('newUser');
-
     return false;
-
   }
-
 });
-
-
-
 export default LoginPage;
+
+
