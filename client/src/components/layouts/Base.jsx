@@ -2,11 +2,22 @@ import React from "react";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { Route, DefaultRoute, RouteHandler } from "react-router";
+import $ from "jQuery";
 
 var Base = React.createClass({
 
   componentWillMount: function(){
     // this.props.history.pushState(null, '/dashboard/overview');
+    $.ajax({
+      url: "/dashboardAuth",
+      method: "GET"
+  }).done(function (something) {
+      var myToken = something.success;
+      console.log(myToken);
+      if(!myToken){
+        window.location.href = '/#/login';
+      }
+  });
   },
 
   render: function() {

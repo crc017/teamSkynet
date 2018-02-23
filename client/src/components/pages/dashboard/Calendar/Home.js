@@ -240,20 +240,9 @@ handlePageChangeCalendar = () => {
   }).done(function (data) {
     
     
-    if(!data.success){
-      postSelection = 'central'
-      
-    } else{
-      postSelection = 'calendar'
+  })
+  location.reload();
 
-  
-        //window.location.href = '/';
-        //this.props.history.pushState(null, '/dashboard/overview');
-    };
-  })
-  this.setState({
-    tab: postSelection
-  })
   };
 
 };

@@ -7,6 +7,9 @@ import $ from "jQuery";
 
 var NewUser = React.createClass({
     
+  componentDidMount: function(){
+    console.log($("#image"))
+  },
   render: function() {
     return (
       <div className="login-page ng-scope ui-view">  
@@ -85,7 +88,78 @@ var NewUser = React.createClass({
 
     e.preventDefault();
     $("#createError").html('');
+    console.log("File is: " + $("#file")[0].files[0]);
+    console.log("File", file, $('#file'));
+    //console.log("DataURL: " + $('#file')[0].files[0].toDataURL());
     
+
+    var base64String;
+
+    function getDataUri(url, callback) {
+      var image = new Image();
+  
+      image.onload = function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+          canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+  
+          canvas.getContext('2d').drawImage(this, 0, 0);
+  
+          // Get raw image data
+          callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+  
+          // ... or get as Data URI
+          callback(canvas.toDataURL('image/png'));
+      };
+  
+      image.src = url;
+  }
+//   getDataUri($("#file")[0].files[0], function(dataUri) {
+//     // Do whatever you'd like with the Data URI!
+    
+//     return dataUri;
+// });
+console.log("Data URI: " + getDataUri($("#file")[0]));
+
+  
+    function imageToBase64(img)
+    {
+      var f = img.files[0]; // FileList object    
+      var reader = new FileReader();  
+      // Closure to capture the file information.    
+      reader.onload = (function (theFile)  
+      {  
+        
+          return function (e)  
+          {  
+              
+              var binaryData = e.target.result;  
+              //Converting Binary Data to base 64    
+              base64String = window.btoa(binaryData);  
+              //showing file converted to base64   
+              console.log('Binary String: ' + base64String); 
+              // document.getElementById('base64')  
+              //     .value = base64String;  
+              //$("#file")
+              // alert('File converted to base64 successfuly!\nCheck in Textarea');  
+              return base64String;
+          };  
+      })
+
+    console.log('Binary String: ' + base64String); 
+      (f);  
+      // Read in the image file as a data URL.    
+      console.log("Reader reads: " + reader.readAsBinaryString(f));  
+  
+        
+    };
+     console.log("imageToBase64: " + imageToBase64($("#file")[0]));
+
+
+
+
+
+
     function validateForm() {
         var isValid = true;
         $('.form-control').each(function() {
@@ -109,6 +183,20 @@ var NewUser = React.createClass({
       // console.log("Consoled: " + fd.get('file'));
       // var userimage = $("#userName").val().trim();
 
+
+      function imageToBase64(img)
+      {
+          var canvas, ctx, dataURL, base64;
+          canvas = document.createElement("canvas");
+          ctx = canvas.getContext("2d");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          dataURL = canvas.toDataURL("image/png");
+          base64 = dataURL.replace(/^data:image\/png;base64,/, "");
+          return base64;
+      };
+      console.log("imageToBase64: " + imageToBase64($("#file")));
             $.ajax({
                 method: "POST",
                 url: "/api/users",
@@ -123,7 +211,7 @@ var NewUser = React.createClass({
                   height: heightInches.toString(),
                   weight: $("#weight").val().trim(),
                   mygoal: $("#mygoal").val().trim(),
-                  image: file
+                  image: imageToBase64($("#file"))
                 },
             }).done(function (data) {
 

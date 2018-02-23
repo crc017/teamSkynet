@@ -2,7 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const router = express.Router();
 const path = require("path");
-
+const cookieparser = require("cookie-parser");
 const app = express(); 
 const mongoose = require("mongoose");
 
@@ -19,7 +19,33 @@ var storage = multer.diskStorage({
       cb(null, file.fieldname + '.jpg')
     }
   });
+
 var upload = multer({ storage: storage }).any();
+
+
+//Initial Dashboard - 
+//********************User Test API**************************
+
+router.get("/dashboardAuth", authMiddleware, function(req, res) {
+  
+//   db.User.find({
+//     userName: req.decoded
+// }).then((user) => {
+//   if(!user){
+//     res.json({
+//       success: false,
+//       message: 'Not Logged In'
+//     });
+//   }else{
+  res.status(200).json({
+    success: true,
+    message: 'Token Authenticated.'
+  });
+//   }
+
+// });
+});
+//****************************************************************/
 
 
 //UserTest
@@ -58,26 +84,6 @@ var upload = multer({ storage: storage }).any();
 
   });
 //****************************************************************/
-
-
-
-//******************************* */
-router.post("/testMulter", function(req,res){
-  upload(req, res, function (err) {
-    if (err) {0
-      // An error occurred when uploading 
-    }
-    res.json({
-        success: true,
-        message: Date.now()
-    });
- 
-    // Everything went fine 
-  })
-});
-
-//******************************* */
-
 
 
 //newUser
@@ -124,17 +130,6 @@ router.post("/api/users", function (req,res) {
           message: 'Successfully created user.',
           success: true
         });;
-      });
-      upload(req.body.image, res, function (err) {
-        if (err) {0
-          // An error occurred when uploading 
-        }
-        res.json({
-            success: true,
-            message: Date.now()
-        });
-     
-        // Everything went fine 
       });
       
     }else{
@@ -199,6 +194,7 @@ router.post("/api/auth", function (req, res) {
 //// GET user info personalized display
 router.get("/api/userinfo", authMiddleware, function (req, res) { //authMiddleware
   console.log(req.decoded);
+
   db.User.findOne({
     // include: [{
     //   model: db.UserGroup,
@@ -263,8 +259,8 @@ router.post("/api/routine", authMiddleware, function (req, res) {
 
 
 
-//getBurned
-//********************Retrieve User's Calories Burned API**************************
+//getRoutine
+//********************Retrieve User's Routines API**************************
 
 router.get("/api/routine", authMiddleware, function (req, res) { 
 
@@ -286,16 +282,10 @@ router.get("/api/routine", authMiddleware, function (req, res) {
 router.get("/api/burned", authMiddleware, function (req, res) { 
 
   db.Burned.findAll({
-    include: [{
-      model: db.UserGroup,
-      required: true,
-      where: {
-        userId: 1 //req.decoded.user.id
-      }
-    }]
-  }).then((burned) => {
+    userName: req.decoded.username
+  }).then((Burned) => {
 
-    res.status(200).json(burned);
+  res.status(200).json(Burned);
 
   });
 
@@ -305,76 +295,22 @@ router.get("/api/burned", authMiddleware, function (req, res) {
 
 //postBurned
 //********************Store User's Calories Burned API**************************
+//postRoutine
+//********************Store User's Routines API**************************
 router.post("/api/burned", authMiddleware, function (req, res) {
-
-  //Use req.decoded.userid
-  db.burned.create({
-    name: req.body.name,
-    type: req.body.type
-  }).then((burned) => {
-
-    var usergroups = [];
-
-    for (var i = 0; i < req.body.friends.length; i++) {
-      usergroups.push({
-        UserId: req.body.friends[i].id,
-        GroupId: group.id
-      });
-    }
-
-    db.UserGroup.bulkCreate(usergroups).then(() => {
-
+  //console.log("req.decoded.auth:  " + req.decoded.id);
+    db.Burned.create({
+      userName: req.decoded.username,
+      Monday: req.body.monday,
+      Tuesday: req.body.tuesday,
+      Wednesday: req.body.wednesday,
+      Thursday: req.body.thursday,
+      Friday: req.body.friday,
+      Saturday: req.body.saturday,
+      Sunday: req.decoded.sunday
+    }).then((routine) => {
       res.status(200).json({
-        message: "Successfully created group."
-      });
-
-    });
-
-  })
-});
-//****************************************************************/
-
-
-//getConsumed
-//********************Retrieve User's Calories Consumed API**************************
-
-//
-router.get("/api/consumed", authMiddleware, function (req, res) { 
-
-  db.Consumed.findAll({
-
-      where: {
-        userId: req.decoded.user.id
-      }
-  }).then((consumed) => {
-
-    res.status(200).json(consumed);
-
-  });
-
-});
-
-//****************************************************************/
-
-
-//postConsumed
-//********************Store User's Calories Consumed API**************************
-router.post("/api/consumed", authMiddleware, function (req, res) {
-  console.log("req.decoded.auth:  " + req.decoded.id);
-
-  db.User.findById(req.decoded.id).then((user) => {
-
-
-    db.Consumed.create({
-      eventadmin: user.id,
-      eventname: req.body.eventname,
-      eventgroup: req.body.eventgroup,
-      username: user.username,
-      eventdate: req.body.eventdate,
-      ongoingevent: false
-    }).then((event) => {
-      res.status(200).json({
-        message: "Successfully created group."
+        message: "Successfully logged Workout."
       })
     })
 
@@ -382,12 +318,62 @@ router.post("/api/consumed", authMiddleware, function (req, res) {
   })
 
 
-});
+
 //****************************************************************/
 
-function imageStore(req, res, file, next) {
+//****************************************************************/
 
-}
+
+// //getConsumed
+// //********************Retrieve User's Calories Consumed API**************************
+
+// //
+// router.get("/api/consumed", authMiddleware, function (req, res) { 
+
+//   db.Consumed.findAll({
+
+//       where: {
+//         userId: req.decoded.user.id
+//       }
+//   }).then((consumed) => {
+
+//     res.status(200).json(consumed);
+
+//   });
+
+// });
+
+// //****************************************************************/
+
+
+// //postConsumed
+// //********************Store User's Calories Consumed API**************************
+// router.post("/api/consumed", authMiddleware, function (req, res) {
+//   console.log("req.decoded.auth:  " + req.decoded.id);
+
+//   db.User.findById(req.decoded.id).then((user) => {
+
+
+//     db.Consumed.create({
+//       eventadmin: user.id,
+//       eventname: req.body.eventname,
+//       eventgroup: req.body.eventgroup,
+//       username: user.username,
+//       eventdate: req.body.eventdate,
+//       ongoingevent: false
+//     }).then((event) => {
+//       res.status(200).json({
+//         message: "Successfully created group."
+//       })
+//     })
+
+
+//   })
+
+
+// });
+// //****************************************************************/
+
 
 
 //authMiddleware
@@ -410,6 +396,7 @@ function authMiddleware(req, res, next) {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
         next();
+        
       }
     });
 
@@ -417,7 +404,11 @@ function authMiddleware(req, res, next) {
 
     // if there is no token
     // return to login page
-    res.redirect('/login');
+    console.log("I'm redirecting")
+    return res.json({
+      success: false,
+      message: 'Failed to authenticate token.'
+    });
   }
 }
 //****************************************************************/

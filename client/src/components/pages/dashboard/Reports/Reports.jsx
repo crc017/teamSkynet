@@ -2,8 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import { Bar, Line, Doughnut } from "react-chartjs-2";
-
-
 const data = {
   labels:  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Goal Calories'],
   datasets: [
@@ -28,16 +26,87 @@ const data = {
     data: [500, 250, 980, 230, 560, 851, 765, 900, 0]
     },
   ]};
-var Buttons = React.createClass({
+  var Buttons = React.createClass({
+    getInitialState: function() {
+      return {
+        tab: 'info'
+      };
+    },
+    
+    handlechangeGraph: function(evt) {
+      this.setState({
+        tab: this.state.tab = 'graph'
+      });
+    },
+    handlechangeInfo: function(evt) {
+      this.setState({
+        tab: this.state.tab = 'info'
+      });
+    },
   render: function() {
     return (
       <div key="reports" className="reports-page">
         <div className="ng-scope"> 
-          <Link to="/dashboard/overview" className="pull-right btn btn-primary btn-outline btn-rounded">Back to Overview</Link> 
-          <h2> Info </h2>
-          <h2 >Graphs</h2> 
-          <h2>Calories</h2> 
+        
+        <button onClick={this.handlechangeInfo} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Calories</button><br></br>
+    <Link to="/dashboard/overview" className="pull-right btn btn-primary btn-outline btn-rounded">Back to Overview</Link> 
           <div>
+            
+            {this.state.tab === 'info' &&
+            
+            
+            
+            
+            
+            
+            <div className="login-page ng-scope ui-view" > 
+            <div style={{ textAlign: "left" }}>
+            <button onClick={this.handlechangeGraph} type="submit"  className="btn btn-white btn-outline btn-lg btn-rounded">Graphs</button><br></br>
+            </div>
+            
+             
+            
+            <h2>Daily Calories and Goals</h2> 
+            
+            
+            <form role="form" onSubmit={this.GandCB} className="ng-pristine ng-valid"> 
+            <div className="form-content"> 
+              <div className="form-group row"> 
+                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="MonCal">Monday</label>
+                   <div className="col-sm-3">
+                    <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                    <br></br></div>
+                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="TueCal">Tuesday</label>
+                    <div className="col-sm-3">
+                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                      <br></br></div> 
+                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="WedCal">Wednesday</label>
+                   <div className="col-sm-3">
+                    <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                    <br></br></div>
+                  <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="ThurCal">Thursday</label>
+                    <div className="col-sm-3">
+                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                      <br></br></div> 
+                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="FriCal">Friday</label>
+                    <div className="col-sm-3">
+                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                      <br></br></div> 
+                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="SatCal">Saturday</label>
+                    <div className="col-sm-3">
+                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                      <br></br></div> 
+                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label" id="SunCal">Sunday</label>
+                    <div className="col-sm-3">
+                      <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                        </div> 
+                    </div>
+            </div> 
+            <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
+          </form> 
+        </div>
+    }
+            {this.state.tab === 'graph' &&
               <Bar
          data={data}
          width={100}
