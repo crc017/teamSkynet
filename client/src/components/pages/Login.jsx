@@ -25,7 +25,7 @@ var LoginPage = React.createClass({
               <form role="form" onSubmit={this.handleLogin} className="ng-pristine ng-valid"> 
                 <div className="form-content"> 
                   <div className="form-group"> 
-                    <input id="username" type="text" className="hvr-bounce form-control input-underline input-lg" placeholder="Email" /> 
+                    <input id="username" type="text" className="hvr-bounce form-control input-underline input-lg" placeholder="Username" /> 
                   </div> 
                   <div className="form-group"> 
                     <input type="password" id="password" className="hvr-bounce form-control input-underline input-lg" placeholder="Password" /> 

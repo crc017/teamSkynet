@@ -41,8 +41,7 @@ var Blank = React.createClass({
               </p>
           </Panel>
           </div>
-          <p> <a className="btn btn-primary btn-lg btn-outline btn-rounded hvr-bounce">Learn more</a> </p> 
-        </Jumbotron> 
+          </Jumbotron> 
       </div>
       
       

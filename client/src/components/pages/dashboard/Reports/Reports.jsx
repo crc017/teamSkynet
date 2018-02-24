@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import { Bar, Line, Doughnut } from "react-chartjs-2";
 import moment from 'moment'
+import $ from "jQuery";
 
 const today = moment().format("dddd")
 
@@ -13,14 +14,14 @@ const data = {
   labels:  [today, moment().add(1, "days").format("dddd"), moment().add(2, "days").format("dddd"), moment().add(3, "days").format("dddd"), moment().add(4, "days").format("dddd"), moment().add(5, "days").format("dddd"), moment().add(6, "days").format("dddd"), 'Goal Calories'],
   datasets: [
     {
-      label: 'Calories Per Day',
+      label: 'Calories Consumed',
       labelsColor: 'rgba(255,255,255, 0.9)',
       backgroundColor: 'rgba(255,99,132,.7)',
       borderColor: 'rgba(255,99,132,1)',
       borderWidth: 1,
       hoverBackgroundColor: 'rgba(255,99,132,1)',
       hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [1500, 1350, 1890, 1100, 1735, 1455, 1240, 1200, 0]
+      data: [1800, 2000, 1600, 2200, 2150, 1750, 1900]
     },
     {label: 'Calories Burned',
     labelsColor: 'rgba(0, 0, 255, 0.3)',
@@ -30,7 +31,7 @@ const data = {
     borderWidth: 1,
     hoverBackgroundColor: 'rgba(0, 0, 255, 0.7)',
     hoverBorderColor: 'rgba(0, 0, 255, 0.7)',
-    data: [500, 250, 980, 230, 560, 851, 765, 900, 0]
+    data: [125, 250, 120, 0, 100, 220, 0]
     },
   ]};
   var Buttons = React.createClass({
@@ -72,7 +73,12 @@ const data = {
                         </div>
                         <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Calories Consumed</label>
                         <div className="col-sm-3">
-                           <input id="calories" type="number" className="form-control input-md formin" placeholder="2000" />
+                           <input id="caloriesConsumed" type="number" className="form-control input-md formin" placeholder="2000" />
+                            <br></br>
+                        </div>
+                        <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Calories Burned</label>
+                        <div className="col-sm-3">
+                           <input id="caloriesBurned" type="number" className="form-control input-md formin" placeholder="500" />
                             <br></br>
                         </div>
                         
@@ -129,7 +135,8 @@ const data = {
                 url: "/api/consumed",
                 data: {
                   date: $("#dateConsumed").val().trim(),
-                  calories: $("#calories").val().trim(),
+                  caloriesConsumed: $("#caloriesConsumed").val().trim(),
+                  caloriesBurned: $("#caloriesBurned").val().trim(),
                 },
             }).done(function (data) {
 
@@ -145,7 +152,7 @@ const data = {
             });
 
     
-   
+            location.reload();
     return false;
 
   }
