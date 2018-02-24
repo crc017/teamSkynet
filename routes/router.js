@@ -334,20 +334,14 @@ router.get("/api/burned", authMiddleware, function (req, res) {
 
 //postBurned
 //********************Store User's Calories Burned API**************************
-router.post("/api/burned", authMiddleware, function (req, res) {
+router.post("/api/consumed", authMiddleware, function (req, res) {
   //console.log("req.decoded.auth:  " + req.decoded.id);
-    db.Burned.create({
-      userName: req.decoded.username,
-      Monday: req.body.monday,
-      Tuesday: req.body.tuesday,
-      Wednesday: req.body.wednesday,
-      Thursday: req.body.thursday,
-      Friday: req.body.friday,
-      Saturday: req.body.saturday,
-      Sunday: req.decoded.sunday
-    }).then((burned) => {
+    db.Consumed.create({
+      date: req.decoded.date,
+      calories: req.body.calories,
+    }).then((consumed) => {
       res.status(200).json({
-        message: "Successfully logged Workout."
+        message: "Successfully logged Calories."
       })
     })
 

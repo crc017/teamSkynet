@@ -65,15 +65,20 @@ const data = {
                 <form role="form" onSubmit={this.GandCB} className="ng-pristine ng-valid"> 
                   <div className="form-content"> 
                     <div className="form-group row"> 
-                      <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Monday</label>
+                      <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Date</label>
                         <div className="col-sm-3">
-                           <input id="birthdate" type="date" className="form-control input-md formin" placeholder="12/24/1932" />
+                           <input id="dateConsumed" type="date" className="form-control input-md formin" placeholder="12/24/1932" />
+                            <br></br>
+                        </div>
+                        <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Calories Consumed</label>
+                        <div className="col-sm-3">
+                           <input id="calories" type="number" className="form-control input-md formin" placeholder="2000" />
                             <br></br>
                         </div>
                         
                     </div>
             </div> 
-            <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
+            <button onClick={this.handleNewCalories} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  
           </form> 
         </div>
     }
@@ -111,6 +116,38 @@ const data = {
   </div>
       
     );
+  },
+
+
+  handleNewCalories: function(e){
+    
+
+    e.preventDefault();
+    
+            $.ajax({
+                method: "POST",
+                url: "/api/consumed",
+                data: {
+                  date: $("#dateConsumed").val().trim(),
+                  calories: $("#calories").val().trim(),
+                },
+            }).done(function (data) {
+
+               
+                if(!data.success){
+                $("#createError").html(data.message);
+                } else{
+                    $("#createError").html(data.message);
+
+                  
+                    //this.props.history.pushState(null, '/dashboard/overview');
+                };
+            });
+
+    
+   
+    return false;
+
   }
 });
 export default Buttons;

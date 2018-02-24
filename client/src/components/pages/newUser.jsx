@@ -71,11 +71,15 @@ var NewUser = React.createClass({
                 <div className="col-sm-3">
               <input type="number" className="form-control input-md formin"  placeholder="162" id="mygoal"/> 
             </div>
-            <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Profile Image</label>
+            
+          </div>
+          <div className="form-group row"> 
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Profile Image</label>
                 <div className="col-sm-3">
-              <input type="number" className="form-control input-md formin"  placeholder="Image URL" id="image"/> 
+              <input type="text" className="form-control input-md formin"  placeholder="Image URL" id="image"/> 
             </div>
           </div>
+
           {/* <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Profile Picture:</label>
           <input name="file" type="file" className="form-control-file" id="file" /> */}
         </div> 
