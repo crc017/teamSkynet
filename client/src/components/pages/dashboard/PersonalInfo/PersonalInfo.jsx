@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import $ from 'jQuery';
+
 var person = React.createClass({
   getInitialState: function() {
     return {
@@ -12,9 +13,71 @@ var person = React.createClass({
   handleChangeInfo: function(evt){
       this.setState({
         tab: 'info'
-      })
+      }),
+      $.ajax({
+        url: "/api/userinfo",
+        method: "GET"
+    }).done(function (user) {
+
+        //Prefill values for edit info input boxes
+        $("#updateFirstName").val(user.firstName);
+        $("#updateLastName").val(user.lastName);
+        $("#updateEmail").val(user.email);
+        $("#updatePassword").val(user.password);
+        $("#updateWeight").val(user.weight);
+        $("#updateGoals").val(user.myGoal);
+        $("#updateImage").val(user.image);
+  
+    });
   },
   handleChangePersonal: function(evt){
+    
+    function validateForm() {
+      var isValid = true;
+      $('.form-control').each(function() {
+        if ( $(this).val() === '' ){
+          isValid = false;
+        }
+      });
+    return isValid;
+  };
+  
+
+  if(validateForm()){
+
+          $.ajax({
+              method: "POST",
+              url: "/api/userUpdate",
+              data: {
+                firstname: $("#updateFirstName").val().trim(),
+                lastname: $("#updateLastName").val().trim(),
+                email: $("#updateEmail").val().trim(),
+                password: $("#updatePassword").val().trim(),
+                weight: $("#updateWeight").val().trim(),
+                mygoal: $("#updateGoals").val().trim(),
+                image: $("#updateImage").val().trim(),
+              },
+          }).done(function (data) {
+
+             console.log(data);
+          });
+
+  } else{
+      $("#createError").html("Please complete all fields of form.");
+  };
+          $.ajax({
+            url: "/api/userinfo",
+            method: "GET"
+        }).done(function (user) {
+            
+            $("#fullName").html(user.firstName + ' ' + user.lastName);
+            $("#userName").html("User Name: " + user.userName);
+            $("#weight").html("Weight: " + user.weight + " lbs");
+            $("#goals").html("Goals: " + user.myGoal + " lbs");
+            $("#imgattr").attr("src",user.image);
+        });
+    
+    
     this.setState({
       tab: 'personal'
     })
@@ -25,19 +88,12 @@ var person = React.createClass({
     $.ajax({
       url: "/api/userinfo",
       method: "GET"
-  }).done(function (user) {
-      //var objurl = window.URL.createObjectURL(new Blob([user.image]));
-      //var img = new Image();
-      //img.src = objurl;
-      //img.onload = function() {
-      // do something with your image
+  }).done(function (user) { 
       $("#fullName").html(user.firstName + ' ' + user.lastName);
       $("#userName").html("User Name: " + user.userName);
       $("#weight").html("Weight: " + user.weight + " lbs");
       $("#goals").html("Goals: " + user.myGoal + " lbs");
-      // $("#userImage").attr({
-      //     "src": user.image
-      // });
+      $("#imgattr").attr("src",user.image);
   });
   },
   render: function() {
@@ -67,7 +123,48 @@ var person = React.createClass({
     }
     {this.state.tab === 'info' &&
   <div>
-    test
+    <div className="form-content"> 
+          <div className="form-group row"> 
+              <label htmlFor="inputPassword" className="col-sm-2 col-form-label" id="fName">First Name</label>
+               <div className="col-sm-3">
+                <input id="updateFirstName" type="text" className="form-control input-md formin"/>
+                  </div> 
+                  <label htmlFor="inputPassword" className="col-sm-2 col-form-label" id="lName">Last Name</label>
+                <div className="col-sm-3">
+              <input id="updateLastName" type="text" className="form-control input-md formin"/> 
+            </div>
+          </div>
+
+          <div className="form-group row"> 
+                  <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Password</label>
+                <div className="col-sm-3">
+              <input id="updatePassword" type="text" className="form-control input-md formin" placeholder="*****" /> 
+            </div>
+            <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Email</label>
+               <div className="col-sm-3">
+                <input  type="email" className="form-control input-md formin" id="updateEmail"/>
+                  </div> 
+          </div>
+          <div className="form-group row"> 
+              <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Weight</label>
+               <div className="col-sm-3">
+                <input type="number" className="form-control input-md formin" id="updateWeight"/>
+                  </div> 
+                  <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Goal Weight</label>
+                <div className="col-sm-3">
+              <input type="number" className="form-control input-md formin" id="updateGoals"/> 
+            </div>
+            
+          </div>
+          <div className="form-group row"> 
+          <label htmlFor="inputPassword" className="col-sm-2 col-form-label" >Profile Image</label>
+                <div className="col-sm-3">
+                  <input type="text" className="form-control input-md formin" id="updateImage"/> 
+                </div>
+          </div>
+          {/* <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Profile Picture:</label>
+          <input name="file" type="file" className="form-control-file" id="file" /> */}
+        </div> 
   <button type="submit" className="btn btn-white btn-outline btn-lg btn-rounded" onClick={this.handleChangePersonal}>Done</button>
 </div>
   }

@@ -108,7 +108,8 @@ router.post("/api/users", function (req,res) {
         password: req.body.password,
         height: req.body.height,
         weight: req.body.weight,
-        myGoal: req.body.mygoal
+        myGoal: req.body.mygoal,
+        image: req.body.image
       })
       .then((user) => {
 
@@ -139,6 +140,44 @@ router.post("/api/users", function (req,res) {
       })
     };
 });
+});
+//****************************************************************/
+
+
+
+
+//updateUserInfo
+//********************New User API**************************
+router.post("/api/userUpdate", authMiddleware, function (req,res) {
+  
+
+
+db.User.findByIdAndUpdate(  
+  // the id of the item to find
+  req.decoded.id,
+
+  // the change to be made. Mongoose will smartly combine your existing 
+  // document with this change, which allows for partial updates too
+  { firstName:  req.body.firstname,
+    lastName: req.body.lastname,
+    email: req.body.email,
+    password: req.body.password,
+    weight: req.body.weight,
+    myGoal: req.body.mygoal,
+    image: req.body.image
+  },
+
+  // an option that asks mongoose to return the updated version 
+  // of the document instead of the pre-updated one.
+  {new: true},
+
+  // the callback function
+  (err, db) => {
+  // Handle any possible database errors
+      if (err) return res.status(500).send(err);
+      return res.send(db);
+  }
+)
 });
 //****************************************************************/
 
@@ -295,8 +334,6 @@ router.get("/api/burned", authMiddleware, function (req, res) {
 
 //postBurned
 //********************Store User's Calories Burned API**************************
-//postRoutine
-//********************Store User's Routines API**************************
 router.post("/api/burned", authMiddleware, function (req, res) {
   //console.log("req.decoded.auth:  " + req.decoded.id);
     db.Burned.create({
@@ -308,7 +345,7 @@ router.post("/api/burned", authMiddleware, function (req, res) {
       Friday: req.body.friday,
       Saturday: req.body.saturday,
       Sunday: req.decoded.sunday
-    }).then((routine) => {
+    }).then((burned) => {
       res.status(200).json({
         message: "Successfully logged Workout."
       })

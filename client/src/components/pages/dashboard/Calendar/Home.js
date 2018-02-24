@@ -14,6 +14,7 @@ import situp from '../../../../common/images/situp.gif'
 //import GoogleCalendar from '../../../../utils/GoogleCalendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import styles from './Home.scss'
+import { stringify } from 'querystring';
 // use Moment.js to localize react-big-calendar
 BigCalendar.momentLocalizer(moment)
 const calendars = [
@@ -23,7 +24,6 @@ const calendars = [
   }
 ]
 const weeklyRecurrence = 50
-
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -43,7 +43,7 @@ export default class Home extends Component {
           end: new Date(2018, 2, 20),
         }
       ],
-      value: pushup,
+      exercise: pushup,
       options: [
         {
           name: 'Pushups',
@@ -76,16 +76,13 @@ export default class Home extends Component {
       ],
     }
   }
-
   change = function(event){
     this.setState({image: event.target.value});
     console.log(this.state.image)
 }
-
   componentDidMount = () => {
-
+    console.log($("#workout"));
     $("#workout").className = "form-control formin"
-
     $.ajax({
             url: "/api/routine",
             method: "GET"
@@ -127,7 +124,6 @@ export default class Home extends Component {
     //                   }
     //                 ]
     // }
-
 //     const allWorkouts;
 // $.ajax({
 //       url: "/api/routine",
@@ -135,7 +131,6 @@ export default class Home extends Component {
 //     }).done(function (routine) {
         
 //       if(routine){
-
 //           console.log(routine[0]);
 //           allWorkouts = []; 
 //           for(i=0; i<routine.length; i++){
@@ -164,20 +159,11 @@ export default class Home extends Component {
 //               }
 //             ]
 //           }
-
-
-
 //       });
   }
-
-
     //   this.getGoogleCalendarEvents()
-
  //   this.getGoogleCalendarEvents()
   
-
-
-
   
  // getGoogleCalendarEvents = () => {
     /*
@@ -206,34 +192,26 @@ export default class Home extends Component {
       .catch(err => { throw new Error(err) })
   }
 */
-
-
-
-
 handlePageChangeCentral = () => {
   this.setState({
     tab: 'central'
   })
 }
-
 handlePageChangeCalendar = () => {
   this.setState({
     tab: 'calendar'
   })
 }
-
 handlePush = () => {
   this.setState({
     image: pushup
   })
 }
-
 handleSit = () => {
   this.setState({
     image: situp
   })
 } 
-
   render = () => {
     const createItem = (item, key) =>
     <option
@@ -243,13 +221,12 @@ handleSit = () => {
       {item.name}
     </option>;
   return (
-
     <div>
       <div> 
-         <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCalendar}>Exercie Calendar</button>
+         <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCalendar}>Exercise Calendar</button>
       </div>
       <div>
-          <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCentral}>Central Intelligence</button>
+          <button className={styles['title'] + 'btn btn-white btn-outline btn-lg btn-rounded'} onClick={this.handlePageChangeCentral}>Add Exercise</button>
       </div>
       <div className={styles['calendar-container']}>
         {this.state.tab === 'central' && 
@@ -260,12 +237,12 @@ handleSit = () => {
           <div className="form-group row"> 
           <label htmlFor="inputPassword" className="col-sm-2 col-form-label radio">Exercise</label>
           <div className="col-sm-3">
-
-
-
           <select id="workout" 
-          onChange={event => this.setState({ value: event.target.value })}
-          value={this.state.value}
+          onChange={event => {
+            console.log(event.target.name);
+
+            this.setState({ exercise: event.target.value })}}
+          exercise={this.state.exercise}
         >
           {this.state.options.map(createItem)}
         </select>
@@ -275,9 +252,6 @@ handleSit = () => {
           >
             {this.state.options.map(createItem)}
         </select> */}
-
-
-
               {/* <option value="pushup">Pushups</option>
               <option value="situp">Situps</option>
               <option value="pull-up">Pull-Ups</option>
@@ -300,7 +274,7 @@ handleSit = () => {
                   
             </div>
                 <div >
-                <img className="exc"  style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '50%', width: '50%'}} src={this.state.value}/>
+                <img className="exc"  style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '50%', width: '50%'}} src={this.state.exercise}/>
                 </div>
           </div>
         </div> 
@@ -324,28 +298,31 @@ handleSit = () => {
   //     image: selectedValue
   //   })
   //  }
-
   handleNewWorkout = (e) => {
     e.preventDefault();
+    console.log(this.state.options);
     var postSelection;
     var day = $("#date").val().trim();
+    var title;
+    for(var i = 0; i < this.state.options.length; i++) {
+      console.log(i);
+      if (this.state.options[i].value === this.state.exercise) {
+        title = this.state.options[i].name;
+      }
+    }
     var newDay = moment(day, 'YYYY-MM-DD').format('YYYY, MM, DD');
-
   $.ajax({
     method: "POST",
     url: "/api/routine",
     data: {
-      title: $("#workout").val().trim(),
+      title: title,
       reps: $("#reps").val().trim(),
       date: newDay
     },
   }).done(function (data) {
-    
+    console.log($("#workout"))
     
   })
   location.reload();
-
   };
-
 };
-

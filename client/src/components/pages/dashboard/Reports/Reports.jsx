@@ -2,8 +2,15 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from "react-router";
 import {Jumbotron} from 'react-bootstrap';
 import { Bar, Line, Doughnut } from "react-chartjs-2";
+import moment from 'moment'
+
+const today = moment().format("dddd")
+
+
+
 const data = {
-  labels:  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Goal Calories'],
+  
+  labels:  [today, moment().add(1, "days").format("dddd"), moment().add(2, "days").format("dddd"), moment().add(3, "days").format("dddd"), moment().add(4, "days").format("dddd"), moment().add(5, "days").format("dddd"), moment().add(6, "days").format("dddd"), 'Goal Calories'],
   datasets: [
     {
       label: 'Calories Per Day',
@@ -60,38 +67,10 @@ const data = {
                     <div className="form-group row"> 
                       <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="MonCal">Monday</label>
                         <div className="col-sm-3">
-                           <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
+                           <input id="birthdate" type="date" className="form-control input-md formin" placeholder="12/24/1932" />
                             <br></br>
                         </div>
-                          <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="TueCal">Tuesday</label>
-                          <div className="col-sm-3">
-                              <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                              <br></br>
-                          </div> 
-                            <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="WedCal">Wednesday</label>
-                            <div className="col-sm-3">
-                                <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                                <br></br>
-                            </div>
-                              <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="ThurCal">Thursday</label>
-                              <div className="col-sm-3">
-                                  <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                                  <br></br>
-                              </div> 
-                                <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="FriCal">Friday</label>
-                              <div className="col-sm-3">
-                                  <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                                  <br></br>
-                            </div> 
-                              <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="SatCal">Saturday</label>
-                          <div className="col-sm-3">
-                              <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                              <br></br>
-                          </div> 
-                            <label htmlFor="inputPassword" className="col-sm-6 lab col-form-label" id="SunCal">Sunday</label>
-                        <div className="col-sm-3">
-                            <input id="firstName" type="text" className="form-control input-md formin" placeholder="Calories Consumed" />
-                        </div> 
+                        
                     </div>
             </div> 
             <button onClick={this.handleNewLogin} type="submit" className="btn btn-white btn-outline btn-lg btn-rounded">Accept</button><br></br>  

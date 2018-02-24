@@ -12,6 +12,7 @@ const UserSchema = new Schema({
   height: {type:String, required: true},
   weight: {type:Number, required: true},
   myGoal: {type:Number, required: true},
+  image: {type: String, required: false}
   });
 
 const User = mongoose.model("User", UserSchema);
